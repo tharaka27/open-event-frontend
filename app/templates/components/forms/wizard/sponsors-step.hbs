@@ -21,6 +21,18 @@
     </div>
   </div> --}}
 
+  {{!-- Included a topic Card--}}
+    <div class = "center topic-card">
+      <div class="ui center aligned header">
+        {{t 'Information About Sponsor Form'}}
+      </div>
+      <div class="ui muted text">
+        {{t 'The Sponsor form collects the information about sponsors of your event if there are any. 
+        You can add logo of the sponsor as a image with a description. This is an optional section, it is okay to leave this section blank if you dont have any sponsors for the event.'}}
+      </div>
+    </div>
+  {{!--end--}}
+
   
     {{#if this.data.sponsors.length}}
       {{#each this.sponsors as |sponsor index|}}

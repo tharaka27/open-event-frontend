@@ -18,6 +18,20 @@
     </div>
   </div>
 
+    {{!-- Included a topic Card--}}
+    <div class = "center topic-card">
+      <div class="ui center aligned header">
+        {{t 'Information About Sessions and Speakers Form'}}
+      </div>
+      <div class="ui muted text">
+        {{t 'The Sessions and Speakers form collects  information about session types of your event if there is any. 
+        You can add information about Microlocations and virtual online rooms of your event. 
+        This sections also provides you the ability to customize your submissions formas and to 
+        call out for speakers for your event if it is necessary.'}}
+      </div>
+    </div>
+  {{!--end--}}
+
   {{#if this.data.event.isSessionsSpeakersEnabled}}
     <br>
     <div class="my-card">

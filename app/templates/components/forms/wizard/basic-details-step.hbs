@@ -182,6 +182,20 @@
             </div>
             <div class="column">
               <label>{{t "Options"}}</label>
+          <div class="ui stackable celled five column grid ticket-header">
+            <div class="row weight-600">
+              <div class="five wide column">
+                <label class="required">{{t "Ticket Name"}}</label>
+              </div>
+              <div class="three wide column">
+                <label class="required">{{t "Price" }} ( {{ this.data.event.paymentCurrency }}  ) </label>
+              </div>
+              <div class="four wide column">
+                <label class="required">{{t "Quantity"}}</label>
+              </div>
+              <div class="column">
+                <label>{{t "Options"}}</label>
+              </div>
             </div>
           </div>
         </div>
@@ -551,7 +565,7 @@
           <i class="{{if this.collapsed 'caret up icon' 'caret down icon'}}" style="background-color: #ffffff;"></i>
       </h3>
     </div>
-    
+
   {{!-- <button
       type="button"
       class="collapsible"
@@ -559,6 +573,14 @@
     >{{t "Add Organizer or Group Information"}}</button> --}}
 
     <div class="collapsible-content {{this.collapseContent}}" style="padding-left: 0px; padding-right: 0px">
+  <button
+      type="button"
+      class="collapsible"
+      {{action "toggleColapse"}}
+    >{{t "Add Organizer or Group Information"}}
+    <i class="down chevron icon chevron-right "></i>
+  </button>
+    <div class="collapsible-content {{this.collapseContent}}">
       <div class="field">
         <label for="owner_name">{{t "Organizer or Group Name"}}</label>
         <Input @type="text" @id="owner_name" @value={{this.data.event.ownerName}} />
@@ -573,6 +595,7 @@
   </div>
   <div class="spacer-50"></div>
   {{!-- <div class="field">
+  <i class="dropdown icon"></i>
     <div class="ui slider checkbox">
       <Input @type="checkbox" @checked={{this.data.event.hasOwnerInfo}} @id="add_owner_information" />
       <label for="add_owner_information">{{t

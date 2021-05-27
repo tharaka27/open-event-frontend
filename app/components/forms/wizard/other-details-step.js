@@ -13,6 +13,8 @@ export default Component.extend(FormMixin, EventWizardMixin, {
   currentTimezone: moment.tz.guess(),
   timezones,
 
+  collapseContent: 'collapsible-none',
+
   deletedTickets: [],
 
   licenses: computed(function() {
@@ -39,9 +41,7 @@ export default Component.extend(FormMixin, EventWizardMixin, {
     return this.data.event.state !== 'published';
   }),
 
-  hasCodeOfConduct: computed('data.event.codeOfConduct', function() {
-    return !!this.data.event.codeOfConduct;
-  }),
+  hasCodeOfConduct: false,
 
   didInsertElement() {
     if (!this.isCreate && this.data.event.copyright && !this.data.event.copyright.content) {
@@ -89,6 +89,16 @@ export default Component.extend(FormMixin, EventWizardMixin, {
     },
     onChange() {
       this.onValid(() => {});
+    },
+
+    toggleColapse() {
+      if (this.collapseContent === 'collapsible-none') {
+        this.set('collapseContent', 'collapsible-block');
+        this.set('hasCodeOfConduct', true);
+      } else {
+        this.set('collapseContent', 'collapsible-none');
+        this.set('hasCodeOfConduct', false);
+      }
     }
   }
 });

@@ -1,230 +1,269 @@
-<form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forward' on='submit' preventDefault=true}} novalidate>
-  <div class="field">
-    <label class="required" for="name">{{t 'Event Name'}}</label>
-    <Input
-      @type="text"
-      @id="name"
-      @value={{this.data.event.name}} />
-  </div>
-  <div class="three fields">
+<form
+  class="ui form {{if this.isLoading "loading"}}"
+  autocomplete="off"
+  novalidate
+  {{action "move" "forward" on="submit" preventDefault=true}}
+>
+  <div class="my-card">
     <div class="field">
-      <PowerSelect
-        @selected={{this.data.event.type}}
-        @allowClear={{true}}
-        @options={{this.data.types}}
-        @placeholder={{t 'Select Event Type'}}
-        @onChange={{action (mut this.data.event.type)}} as |type|>
+      <label class="required" for="name">{{t "Event Name"}}</label>
+      <Input @type="text" @id="name" @value={{this.data.event.name}} />
+    </div>
+    <div class="three fields">
+      <div class="field">
+        <label>{{t "Event Type"}}</label>
+        <PowerSelect
+          @selected={{this.data.event.type}}
+          @allowClear={{true}}
+          @options={{this.data.types}}
+          @onChange={{action (mut this.data.event.type)}}
+          as |type|
+        >
           {{t-var type.name}}
-      </PowerSelect>
-    </div>
-    <br/>
-    <div class="field">
-      <PowerSelect
-        @selected={{this.data.event.topic}}
-        @allowClear={{true}}
-        @options={{this.data.topics}}
-        @placeholder={{t 'Select Event Topic'}}
-        @onChange={{action (mut this.data.event.topic)}} as |topic|>
+        </PowerSelect>
+      </div>
+      <br />
+      <div class="field">
+        <label>{{t "Event Topic"}}</label>
+        <PowerSelect
+          @selected={{this.data.event.topic}}
+          @allowClear={{true}}
+          @options={{this.data.topics}}
+          @onChange={{action (mut this.data.event.topic)}}
+          as |topic|
+        >
           {{t-var topic.name}}
-      </PowerSelect>
-    </div>
-    <div class="field">
-      <PowerSelect
-        @selected={{this.data.event.subTopic}}
-        @allowClear={{true}}
-        @options={{this.subTopics}}
-        @placeholder={{t 'Select Event Sub-Topic'}}
-        @onChange={{action (mut this.data.event.subTopic)}} as |subTopic|>
+        </PowerSelect>
+      </div>
+      <div class="field">
+        <label>{{t "Event Sub-Topic"}}</label>
+        <PowerSelect
+          @selected={{this.data.event.subTopic}}
+          @allowClear={{true}}
+          @options={{this.subTopics}}
+          @onChange={{action (mut this.data.event.subTopic)}}
+          as |subTopic|
+        >
           {{t-var subTopic.name}}
+        </PowerSelect>
+      </div>
+    </div>
+    <br />
+    {{!-- <div class="ui secondary pointing menu">
+      {{#each this.locationMenuItems as |item|}}
+        <a
+          role="button"
+          href={{null}}
+          class="{{if (eq item this.selectedLocationType) "active"}} item"
+          onclick={{action (mut this.selectedLocationType) item}}
+        >
+          {{t-var item}}
+        </a>
+      {{/each}}
+
+
+    </div> --}}
+
+    <div class="field">
+      <label>{{t "Mode of Participation"}}</label>
+      <PowerSelect
+        @
+        @selected={{this.selectedLocationType}}
+        @options={{this.locationMenuItems}}
+        @onChange={{fn (mut this.selectedLocationType)}}
+        as |name|
+      >
+        {{t-var name}}
       </PowerSelect>
     </div>
-  </div>
-  <br>
-  <div class="ui secondary pointing menu">
-    {{#each this.locationMenuItems as |item|}}
-      <a role="button" href={{null}} class="{{if (eq item this.selectedLocationType) 'active'}} item" onclick={{action (mut this.selectedLocationType) item}}>
-        {{t-var item}}
-      </a>
-    {{/each}}
-  </div>
-  {{#if (or (eq this.selectedLocationType 'Venue') (eq this.selectedLocationType 'Hybrid'))}}
-    <div class="field">
-      <label class="{{if this.isLocationRequired 'required'}}" for="location">{{t 'Location'}}</label>
-      <Widgets::Forms::LocationInput
-        @inputId="{{if this.isLocationRequired 'location'}}"
-        @lat={{this.data.event.latitude}}
-        @lng={{this.data.event.longitude}}
-        @placeName={{this.data.event.locationName}}
-        @searchableName={{this.data.event.searchableLocationName}}
-        @zoom={{15}}
-        @placeholder={{t "Location is required to make this event live"}}>
-        <div class="inline field">
-          <div class="ui slider checkbox">
-            <Input
-              @id="show_map"
-              @type="checkbox"
-              @checked={{this.data.event.isMapShown}} />
-            <label for="show_map">{{t 'Show map on event page'}}</label>
+    {{#if
+      (or
+        (eq this.selectedLocationType "Venue")
+        (eq this.selectedLocationType "Hybrid")
+      )
+    }}
+      <div class="field">
+        <label
+          class="{{if this.isLocationRequired "required"}}"
+          for="location"
+        >{{t "Location"}}</label>
+        <Widgets::Forms::LocationInput
+          @inputId="{{if this.isLocationRequired "location"}}"
+          @lat={{this.data.event.latitude}}
+          @lng={{this.data.event.longitude}}
+          @placeName={{this.data.event.locationName}}
+          @searchableName={{this.data.event.searchableLocationName}}
+          @zoom={{15}}
+          @placeholder={{t "Location is required to make this event live"}}
+        >
+          <div class="inline field">
+            <div class="ui checkbox">
+              <label for="show_map">{{t "Show map on event page"}}</label>
+              <Input
+                @id="show_map"
+                @type="checkbox"
+                @checked={{this.data.event.isMapShown}}
+              />
+            </div>
           </div>
-        </div>
-      </Widgets::Forms::LocationInput>
+        </Widgets::Forms::LocationInput>
+      </div>
+    {{/if}}
+    {{#if
+      (or
+        (eq this.selectedLocationType "Online")
+        (eq this.selectedLocationType "Hybrid")
+      )
+    }}
+      <div class="{{unless this.device.isMobile "six wide"}} field">
+        <label>{{t "Live Stream URL"}}</label>
+        <Widgets::Forms::LinkField
+          @inputId="live_stream_url"
+          @value={{this.data.event.liveStreamUrl}}
+          @onChange={{action (mut this.data.event.liveStreamUrl)}}
+        />
+      </div>
+      <div class="{{unless this.device.isMobile "six wide"}} field">
+        <label>{{t "Webinar URL"}}</label>
+        <Widgets::Forms::LinkField
+          @inputId="webinar_url"
+          @value={{this.data.event.webinarUrl}}
+          @onChange={{action (mut this.data.event.webinarUrl)}}
+        />
+      </div>
+    {{/if}}
+    <br />
+    <div class="fields">
+      <div class="five wide field">
+        <label class="required" for="start_date">{{t "Starts"}}</label>
+        <Widgets::Forms::DatePicker
+          @type="text"
+          @name="start_date"
+          @placeholder="MM/DD/YYYY"
+          @value={{this.data.event.startsAtDate}}
+          @onChange={{pipe-action
+            (action "updateSalesEndDate")
+            (action "onChange")
+          }}
+        />
+      </div>
+      <div class="three wide field">
+        <label for="start_time">&nbsp;</label>
+        <Widgets::Forms::TimePicker
+          @type="text"
+          @name="start_time"
+          @placeholder="HH:MM"
+          @onChange={{action "onChange"}}
+          @value={{this.data.event.startsAtTime}}
+        />
+      </div>
+      <div class="five wide field">
+        <label class="required" for="end_date">{{t "Ends"}}</label>
+        <Widgets::Forms::DatePicker
+          @type="text"
+          @name="end_date"
+          @placeholder="MM/DD/YYYY"
+          @rangePosition="end"
+          @onChange={{action "onChange"}}
+          @value={{this.data.event.endsAtDate}}
+        />
+      </div>
+      <div class="three wide field">
+        <label for="end_time">&nbsp;</label>
+        <Widgets::Forms::TimePicker
+          @type="text"
+          @name="end_time"
+          @placeholder="HH:MM"
+          @onChange={{action "onChange"}}
+          @value={{this.data.event.endsAtTime}}
+        />
+      </div>
+      <div class="five wide field">
+        <label class="required" for="timezone">{{t "Timezone"}}</label>
+        <UiDropdown
+          @class="search selection"
+          @selected={{this.data.event.timezone}}
+          @forceSelection={{false}}
+          @fullTextSearch={{true}}
+        >
+          <Input
+            @type="hidden"
+            @id="timezone"
+            @value={{this.data.event.timezone}}
+          />
+          <i class="dropdown icon"></i>
+          <div class="default text">{{t "Select timezone"}}</div>
+          <div class="menu">
+            {{#each this.timezones as |timezone|}}
+              <div class="item" data-value="{{timezone}}">{{timezone}}</div>
+            {{/each}}
+          </div>
+        </UiDropdown>
+      </div>
     </div>
-  {{/if}}
-  {{#if (or (eq this.selectedLocationType 'Online') (eq this.selectedLocationType 'Hybrid'))}}
-    <div class="{{unless this.device.isMobile 'six wide'}} field">
-      <label>{{t "Live Stream URL"}}</label>
-      <Widgets::Forms::LinkField
-        @inputId="live_stream_url"
-        @value={{this.data.event.liveStreamUrl}}
-        @onChange={{action (mut this.data.event.liveStreamUrl)}} />
-    </div>
-    <div class="{{unless this.device.isMobile 'six wide'}} field">
-      <label>{{t "Webinar URL"}}</label>
-      <Widgets::Forms::LinkField
-        @inputId="webinar_url"
-        @value={{this.data.event.webinarUrl}}
-        @onChange={{action (mut this.data.event.webinarUrl)}} />
-    </div>
-  {{/if}}
- <br>
-  <div class="fields">
-    <div class="five wide field">
-      <label class="required" for="start_date">{{t 'Starts'}}</label>
-      <Widgets::Forms::DatePicker
-        @type="text"
-        @name="start_date"
-        @placeholder="MM/DD/YYYY"
-        @value={{this.data.event.startsAtDate}}
-        @onChange={{pipe-action (action "updateSalesEndDate") (action "onChange")}} />
-    </div>
-    <div class="three wide field">
-      <label for="start_time">&nbsp;</label>
-      <Widgets::Forms::TimePicker
-        @type="text"
-        @name="start_time"
-        @placeholder="HH:MM"
-        @onChange={{action "onChange"}}
-        @value={{this.data.event.startsAtTime}} />
-    </div>
-    <div class="five wide field">
-      <label class="required" for="end_date">{{t 'Ends'}}</label>
-      <Widgets::Forms::DatePicker
-        @type="text"
-        @name="end_date"
-        @placeholder="MM/DD/YYYY"
-        @rangePosition="end"
-        @onChange={{action "onChange"}}
-        @value={{this.data.event.endsAtDate}} />
-    </div>
-    <div class="three wide field">
-      <label for="end_time">&nbsp;</label>
-      <Widgets::Forms::TimePicker
-        @type="text"
-        @name="end_time"
-        @placeholder="HH:MM"
-        @onChange={{action "onChange"}}
-        @value={{this.data.event.endsAtTime}} />
-    </div>
-    <div class="five wide field">
-      <label class="required" for="timezone">{{t 'Timezone'}}</label>
-      <UiDropdown
-        @class="search selection"
-        @selected={{this.data.event.timezone}}
-        @forceSelection={{false}}
-        @fullTextSearch={{true}}>
-        <Input
-          @type="hidden"
-          @id="timezone"
-          @value={{this.data.event.timezone}} />
-        <i class="dropdown icon"></i>
-        <div class="default text">{{t 'Select timezone'}}</div>
-        <div class="menu">
-          {{#each this.timezones as |timezone|}}
-            <div class="item" data-value="{{timezone}}">{{timezone}}</div>
-          {{/each}}
-        </div>
-      </UiDropdown>
-    </div>
-  </div>
- <br>
-  <div class="field">
-    <label for="description">{{t 'Description'}}</label>
-    <Widgets::Forms::RichTextEditor
-      @textareaId="description"
-      @value={{this.data.event.description}} />
-  </div>
-
-  <div class="fields">
-    <div class="fifteen wide field">
-      <Widgets::Forms::ImageUpload
-        @imageUrl={{this.data.event.originalImageUrl}}
-        @needsCropper={{true}}
-        @label={{t "Event Image"}}
-        @id="event_image"
-        @icon="camera"
-        @hint={{t "Select Event Header Image"}}
-        @imageText={{t "Header Image"}}
-        @isHeaderImage={{true}}
-        @maxSizeInKb={{10000}}
-        @helpText={{t "We recommend using at least a 2160x1080px (2:1 ratio) image"}}
-        @requiresDivider={{true}} />
-    </div>
-    <div class="five wide field">
-      <Widgets::Forms::ImageUpload
-        @imageUrl={{this.data.event.logoUrl}}
-        @label={{t "Logo"}}
-        @id="event_logo"
-        @icon="image"
-        @hint={{t "Select Logo"}}
-        @imageText={{t "Logo"}}
-        @maxSizeInKb={{1000}} />
-    </div>
-  </div>
-
-  <div class="ui section divider"></div>
-  <div class="field">
-    <div class="ui slider checkbox">
-      <Input
-        @type="checkbox"
-        @checked={{this.data.event.hasOwnerInfo}}
-        @id="add_owner_information" />
-      <label for="add_owner_information">{{t 'Add Organizer or Group Information'}}</label>
-    </div>
-  </div>
-
-  {{#if this.data.event.hasOwnerInfo}}
+    <br />
     <div class="field">
-      <label for="owner_name">{{t 'Organizer or Group Name'}}</label>
-      <Input
-        @type="text"
-        @id="owner_name"
-        @value={{this.data.event.ownerName}} />
-    </div>
-    <div class="field">
-      <label for="owner_description">{{t 'About the Organizer or Group'}}</label>
+      <label for="description">{{t "Description"}}</label>
       <Widgets::Forms::RichTextEditor
-        @id="owner_description"
-        @value={{this.data.event.ownerDescription}} />
+        @textareaId="description"
+        @value={{this.data.event.description}}
+      />
     </div>
-  {{/if}}
-  <div class="ui section divider"></div>
+
+    <div class="fields">
+      <div class="fifteen wide field">
+        <Widgets::Forms::ImageUpload
+          @imageUrl={{this.data.event.originalImageUrl}}
+          @needsCropper={{true}}
+          @label={{t "Event Image"}}
+          @id="event_image"
+          @icon="camera"
+          @hint={{t "Select Event Header Image"}}
+          @imageText={{t "Header Image"}}
+          @isHeaderImage={{true}}
+          @maxSizeInKb={{10000}}
+          @helpText={{t
+            "We recommend using at least a 2160x1080px (2:1 ratio) image"
+          }}
+          @requiresDivider={{true}}
+        />
+      </div>
+      <div class="five wide field">
+        <Widgets::Forms::ImageUpload
+          @imageUrl={{this.data.event.logoUrl}}
+          @label={{t "Logo"}}
+          @id="event_logo"
+          @icon="image"
+          @hint={{t "Select Logo"}}
+          @imageText={{t "Logo"}}
+          @maxSizeInKb={{1000}}
+        />
+      </div>
+    </div>
+  </div>
+
+  <div class="my-card">
     <div class="field">
-      <label class="required">{{t 'Ticketing System'}}</label>
-      <div class="ui attached segment {{unless this.data.event.tickets 'center aligned'}} mb-4">
+      <label class="required">{{t "Ticketing System"}}</label>
+      <div
+        class="ui attached segment
+          {{unless this.data.event.tickets "center aligned"}}
+          mb-4"
+      >
         {{#if this.data.event.tickets}}
           <div class="ui stackable celled five column grid ticket-header">
             <div class="row weight-600">
               <div class="five wide column">
-                <label class="required">{{t 'Ticket Name'}}</label>
+                <label class="required">{{t "Ticket Name"}}</label>
               </div>
               <div class="three wide column">
-                <label class="required">{{t 'Price'}}</label>
+                <label class="required">{{t "Price"}}</label>
               </div>
               <div class="four wide column">
-                <label class="required">{{t 'Quantity'}}</label>
+                <label class="required">{{t "Quantity"}}</label>
               </div>
               <div class="column">
-                <label>{{t 'Options'}}</label>
+                <label>{{t "Options"}}</label>
               </div>
             </div>
           </div>
@@ -237,28 +276,42 @@
               @canMoveDown={{not-eq index (dec this.ticketCount)}}
               @moveTicketUp={{action "moveTicket" ticket index "up"}}
               @moveTicketDown={{action "moveTicket" ticket index "down"}}
-              @removeTicket={{confirm "Are you sure you wish to delete this ticket ?" (action "removeTicket" ticket)}}
-              @ishidden = {{ticket.isHidden}} />
+              @removeTicket={{confirm
+                "Are you sure you wish to delete this ticket ?"
+                (action "removeTicket" ticket)
+              }}
+              @ishidden={{ticket.isHidden}}
+            />
           {{/each}}
         {{else}}
           <h3 class="text muted weight-500">
-            {{t 'You don\'t have any tickets added. Please add atleast one ticket to publish your event.'}}
+            {{t
+              "You don't have any tickets added. Please add atleast one ticket to publish your event."
+            }}
           </h3>
         {{/if}}
       </div>
-      <button type="button" class="ui blue small button {{if this.device.isMobile 'field fluid'}}" {{action 'addTicket' 'free' this.data.event.tickets.length}}>
+      <button
+        type="button"
+        class="ui blue small button {{if this.device.isMobile "field fluid"}}"
+        {{action "addTicket" "free" this.data.event.tickets.length}}
+      >
         <i class="large icons basic-details">
           <i class="smile icon"></i>
           <i class="inverted corner add icon"></i>
         </i>
-        {{t 'Free Ticket'}}
+        {{t "Free Ticket"}}
       </button>
-      <button type="button" class="ui blue small button {{if this.device.isMobile 'field fluid'}}" {{action 'addTicket' 'paid' this.data.event.tickets.length}}>
+      <button
+        type="button"
+        class="ui blue small button {{if this.device.isMobile "field fluid"}}"
+        {{action "addTicket" "paid" this.data.event.tickets.length}}
+      >
         <i class="large icons basic-details">
           <i class="dollar icon"></i>
           <i class="inverted corner add icon"></i>
         </i>
-        {{t 'Paid Ticket'}}
+        {{t "Paid Ticket"}}
       </button>
       {{!-- {{else}}
         <div class="field">
@@ -267,16 +320,20 @@
         </div>
       {{/if}} --}}
 
-      <button type="button" class="ui blue small button {{if this.device.isMobile 'field fluid'}}" {{action 'addTicket' 'donation' this.data.event.tickets.length}}>
+      <button
+        type="button"
+        class="ui blue small button {{if this.device.isMobile "field fluid"}}"
+        {{action "addTicket" "donation" this.data.event.tickets.length}}
+      >
         <i class="large icons basic-details">
           <i class="heart icon"></i>
           <i class="inverted corner add icon"></i>
         </i>
-        {{t 'Donation Ticket'}}
+        {{t "Donation Ticket"}}
       </button>
     </div>
-  {{#if this.hasPaidTickets}}
-    {{!-- Hiding discount code temporarily, till we get this feature ready to apply discount codes for events.
+    {{#if this.hasPaidTickets}}
+      {{!-- Hiding discount code temporarily, till we get this feature ready to apply discount codes for events.
     <div class="ui section divider"></div>
     <div class="field">
       <label for="discount_code">{{t 'Redeem Discount Code'}}</label>
@@ -311,306 +368,447 @@
       {{/if}}
     </div>
     --}}
-    <br>
-    <div class="field">
-      <h4>{{t 'Add Payment Details'}}</h4>
-      <div class="two fields">
-      <CountryDropdown
-        @required={{true}}
-        @paymentCountries={{true}}
-        @placeholder={{t 'Select country'}}
-        @val={{this.data.event.paymentCountry}}
-        @id={{'payment_country'}} />
-        <div class="field">
-          <label class="required">{{t 'Select currency'}}</label>
-          <UiDropdown
-            @class="search selection"
-            @selected={{this.data.event.paymentCurrency}}
-            @forceSelection={{false}}
-            @fullTextSearch={{true}}>
-            <Input
-              @type="hidden"
-              @id="payment_currency"
-              @value={{this.data.event.paymentCurrency}} />
-            <i class="dropdown icon"></i>
-            <div class="default text">{{t 'Select currency'}}</div>
-            <div class="menu">
-              {{#each this.paymentCurrencies as |paymentCurrency|}}
-                <div class="item" data-value="{{paymentCurrency.code}}">
-                  {{paymentCurrency.code}} -
-                  {{t-var paymentCurrency.name}}
-                  ({{paymentCurrency.symbol}})
-                </div>
-              {{/each}}
-            </div>
-          </UiDropdown>
-        </div>
-      </div>
-    </div>
-    <br>
-    <div class="field">
-      <h4>{{t 'Choose payment methods'}}</h4>
-      {{#if this.canAcceptPayPal}}
-        <label>{{t 'Payment by PayPal'}}</label>
-        <div class="field payments">
-          <div class="ui checkbox">
-            <Input
-              @type="checkbox"
-              @id="payment_by_paypal"
-              @checked={{this.data.event.canPayByPaypal}} />
-            <label for="payment_by_paypal">
-              <span>{{t 'YES, accept payment through PayPal'}}</span>
-              <br>
-              <span class="text muted">
-                {{t 'Paypal accepts credit card, debit card and PayPal payments. To learn how it works '}}
-                <a href="https://www.paypal.com/us/webapps/mpp/popup/about-payment-methods" target="_blank"
-                  rel="noopener noreferrer">
-                  {{t 'click here'}}
-                </a>.
-              </span>
-            </label>
-          </div>
-        </div>
-        {{#if this.data.event.canPayByPaypal}}
-          <div class="field">
-            <label class="required">PayPal Email</label>
-            <Input
-              @type="email"
-              @id="paypal_email"
-              @value={{this.data.event.paypalEmail}} />
-          </div>
-        {{/if}}
-      {{/if}}
-      {{#if this.canAcceptPaytm}}
-        <label>{{t 'Payment by Paytm'}}</label>
-        <div class="field payments">
-          <div class="ui checkbox">
-            <Input
-              @type="checkbox"
-              @id="payment_by_paytm"
-              @checked={{this.data.event.canPayByPaytm}} />
-            <label for="payment_by_paytm">
-              <span>{{t 'YES, accept payment through Paytm'}}</span>
-              <br>
-            </label>
-          </div>
-        </div>
-      {{/if}}
-      {{#if this.canAcceptAliPay}}
-        <label>{{t 'Payment with AliPay'}}</label>
-        <div class="field payments">
-          <div class="ui checkbox">
-            <Input
-              @type="checkbox"
-              @id="payment_by_alipay"
-              @checked={{this.data.event.canPayByAlipay}} />
-            <label for="payment_by_alipay">
-              {{t 'Yes, accept payment through AliPay Gateway'}}
-              <div class="ui hidden divider"></div>
-              <span class="text muted">
-                {{t 'AliPay can accept Credit and Debit Cards, Net-Banking and AliPay. Find more details '}}
-                <a href="https://stripe.com/docs/sources/alipay" target="_blank"
-                  rel="noopener noreferrer">{{t 'here'}}</a>.
-              </span>
-            </label>
-          </div>
-        </div>
-        {{#if this.data.event.canPayByAliPay}}
-          <label>{{t 'AliPay Gateway has been successfully activated'}}</label>
-        {{/if}}
-      {{/if}}
-      {{#if this.canAcceptOmise}}
-        <label>{{t 'Payment with Omise'}}</label>
-        <div class="field payments">
-          <div class="ui checkbox">
-            <Input
-              @type="checkbox"
-              @id="payment_by_omise"
-              @checked={{this.data.event.canPayByOmise}} />
-            <label for="payment_by_omise">
-              {{t 'Yes, accept payment through Omise Gateway'}}
-              <div class="ui hidden divider"></div>
-              <span class="text muted">
-                {{t 'Omise can accept Credit and Debit Cards, Net-Banking and AliPay. Find more details '}}
-                <a href="https://www.omise.co/payment-methods" target="_blank"
-                  rel="noopener noreferrer">{{t 'here'}}</a>.
-              </span>
-            </label>
-          </div>
-        </div>
-        {{#if this.data.event.canPayByOmise}}
-          <label>{{t 'Omise Gateway has been successfully activated'}}</label>
-        {{/if}}
-      {{/if}}
-      {{#if this.canAcceptStripe}}
-        <label>{{t 'Payment by Stripe'}}</label>
-        <div class="field payments">
-          <div class="ui checkbox">
-            <Input
-              @type="checkbox"
-              @id="payment_by_stripe"
-              @checked={{this.data.event.canPayByStripe}} />
-            <label for="payment_by_stripe">
-              <span>{{t 'YES, accept payment through Stripe'}}</span>
-              <br>
-              <span class="text muted">
-                {{t 'Stripe accepts Visa, Master and Amex. Find out more about Stripe '}}
-                <a href="https://stripe.com/docs" target="_blank" rel="noopener noreferrer">{{t 'here'}}</a>.
-              </span>
-            </label>
-          </div>
-        </div>
-        {{#if this.data.event.canPayByStripe}}
-          <div class="field">
-            {{#if (or this.data.event.stripeAuthorization.stripeAuthCode this.data.event.stripeAuthorization.stripePublishableKey)}}
-              <label class="required">
-                {{t 'You have linked your Stripe account successfully. Click here to disconnect your account.'}}
-              </label>
-              <a href="#" class="stripe-connect" role="button"
-                {{action 'disconnectStripe'}}><span>{{t 'Disconnect Stripe Account'}}</span></a>
-            {{else}}
-              <label class="required">{{t 'Connect to your Stripe account'}}</label>
-              <a href="#" class="stripe-connect" role="button"
-                {{action 'connectStripe'}}><span>{{t 'Connect with Stripe'}}</span></a>
-            {{/if}}
-          </div>
-        {{/if}}
-      {{/if}}
-      <label>{{t 'Offline Payments'}}</label>
-      <div class="field payments">
-        <div class="ui checkbox">
-          <Input
-            @type="checkbox"
-            @id="payment_by_cheque"
-            @checked={{this.data.event.canPayByCheque}} />
-          <label for="payment_by_cheque">
-            {{t 'YES, accept payment by Cheque'}}
-          </label>
-        </div>
-      </div>
-      {{#if this.data.event.canPayByCheque}}
-        <div class="field payments">
-          <label class="required">
-            {{t 'Enter you account name and other required details/instructions to ticket buyers'}}
-          </label>
-          <Textarea
-            @id="cheque_details"
-            @value={{this.data.event.chequeDetails}}
-          />
-        </div>
-      {{/if}}
-
-      <div class="field payments">
-        <div class="ui checkbox">
-          <Input
-            @type="checkbox"
-            @id="payment_by_bank"
-            @checked={{this.data.event.canPayByBank}}
-          />
-          <label for="payment_by_bank">
-            {{t 'YES, accept payment by Telegraphic Transfer (TT) / Bank Transfer '}}
-          </label>
-        </div>
-      </div>
-
-      {{#if this.data.event.canPayByBank}}
-        <div class="field">
-          <label class="required">
-            {{t 'Enter your bank details and other required details/instructions to ticket buyers'}}
-          </label>
-          <Textarea
-            @id="bank_details"
-            @value={{this.data.event.bankDetails}}
-          />
-        </div>
-      {{/if}}
-
-      <div class="field payments">
-        <div class="ui checkbox">
-          <Input
-            @type="checkbox"
-            @id="payment_onsite"
-            @checked={{this.data.event.canPayOnsite}} />
-          <label for="payment_onsite">
-            {{t 'YES, accept payment at the event (on site) '}}
-          </label>
-        </div>
-      </div>
-
-      {{#if this.data.event.canPayOnsite}}
-        <div class="field">
-          <label class="required">
-            {{t 'Enter your payment instructions and other required details/instructions to ticket buyers'}}
-          </label>
-          <Textarea
-            @id="on_site_details"
-            @value={{this.data.event.onsiteDetails}}
-          />
-        </div>
-      {{/if}}
-      <br>
+      <br />
       <div class="field">
-        {{#if this.data.event.isTaxEnabled}}
-          <div class="ui card">
-            <div class="content tax-info">
-              <div class="meta">
-                {{t 'Tax Information'}}
+        <h4>{{t "Add Payment Details"}}</h4>
+        <div class="two fields">
+          <CountryDropdown
+            @required={{true}}
+            @paymentCountries={{true}}
+            @placeholder={{t "Select country"}}
+            @val={{this.data.event.paymentCountry}}
+            @id={{"payment_country"}}
+          />
+          <div class="field">
+            <label class="required">{{t "Select currency"}}</label>
+            <UiDropdown
+              @class="search selection"
+              @selected={{this.data.event.paymentCurrency}}
+              @forceSelection={{false}}
+              @fullTextSearch={{true}}
+            >
+              <Input
+                @type="hidden"
+                @id="payment_currency"
+                @value={{this.data.event.paymentCurrency}}
+              />
+              <i class="dropdown icon"></i>
+              <div class="default text">{{t "Select currency"}}</div>
+              <div class="menu">
+                {{#each this.paymentCurrencies as |paymentCurrency|}}
+                  <div class="item" data-value="{{paymentCurrency.code}}">
+                    {{paymentCurrency.code}}
+                    -
+                    {{t-var paymentCurrency.name}}
+                    ({{paymentCurrency.symbol}})
+                  </div>
+                {{/each}}
               </div>
-            </div>
-            <div class="content">
-              <div class="header">{{this.data.event.tax.name}}</div>
-              {{#if this.data.event.tax.shouldSendInvoice}}
-                <div class="description">
-                  {{t 'Organisation Name '}}{{this.data.event.tax.registeredCompany}}
-                </div>
-              {{/if}}
-              <div class="description">
-                {{this.data.event.tax.taxId}}<br>
-                {{this.data.event.tax.rate}}% - {{if this.data.event.tax.isTaxIncludedInPrice 'Included in ticket price' 'Extra fee on ticket price'}}
-              </div>
-            </div>
-            <div class="ui bottom attached small buttons">
-              <button class="ui button" type="button" {{action 'openTaxModal' false}}>
-                <i class="pencil icon"></i>
-                {{t 'Edit'}}
-              </button>
-
-              <button class="ui red button" type="button" {{action 'deleteTaxInformation'}}>
-                <i class="trash icon"></i>
-                {{t 'Remove'}}
-              </button>
+            </UiDropdown>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div class="field">
+        <h4>{{t "Choose payment methods"}}</h4>
+        {{#if this.canAcceptPayPal}}
+          <label>{{t "Payment by PayPal"}}</label>
+          <div class="field payments">
+            <div class="ui checkbox">
+              <Input
+                @type="checkbox"
+                @id="payment_by_paypal"
+                @checked={{this.data.event.canPayByPaypal}}
+              />
+              <label for="payment_by_paypal">
+                <span>{{t "YES, accept payment through PayPal"}}</span>
+                <br />
+                <span class="text muted">
+                  {{t
+                    "Paypal accepts credit card, debit card and PayPal payments. To learn how it works "
+                  }}
+                  <a
+                    href="https://www.paypal.com/us/webapps/mpp/popup/about-payment-methods"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {{t "click here"}}
+                  </a>.
+                </span>
+              </label>
             </div>
           </div>
-        {{else}}
-          <button type="button" class="ui right labeled icon button" {{action 'openTaxModal' true}}>
-            <i class="percent icon"></i>
-            {{t 'Add Tax Information'}}
-          </button>
+          {{#if this.data.event.canPayByPaypal}}
+            <div class="field">
+              <label class="required">PayPal Email</label>
+              <Input
+                @type="email"
+                @id="paypal_email"
+                @value={{this.data.event.paypalEmail}}
+              />
+            </div>
+          {{/if}}
         {{/if}}
-        <div class="ui hidden divider"></div>
-        <div class="field">
+        {{#if this.canAcceptPaytm}}
+          <label>{{t "Payment by Paytm"}}</label>
+          <div class="field payments">
+            <div class="ui checkbox">
+              <Input
+                @type="checkbox"
+                @id="payment_by_paytm"
+                @checked={{this.data.event.canPayByPaytm}}
+              />
+              <label for="payment_by_paytm">
+                <span>{{t "YES, accept payment through Paytm"}}</span>
+                <br />
+              </label>
+            </div>
+          </div>
+        {{/if}}
+        {{#if this.canAcceptAliPay}}
+          <label>{{t "Payment with AliPay"}}</label>
+          <div class="field payments">
+            <div class="ui checkbox">
+              <Input
+                @type="checkbox"
+                @id="payment_by_alipay"
+                @checked={{this.data.event.canPayByAlipay}}
+              />
+              <label for="payment_by_alipay">
+                {{t "Yes, accept payment through AliPay Gateway"}}
+                <div class="ui hidden divider"></div>
+                <span class="text muted">
+                  {{t
+                    "AliPay can accept Credit and Debit Cards, Net-Banking and AliPay. Find more details "
+                  }}
+                  <a
+                    href="https://stripe.com/docs/sources/alipay"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >{{t "here"}}</a>.
+                </span>
+              </label>
+            </div>
+          </div>
+          {{#if this.data.event.canPayByAliPay}}
+            <label>{{t
+                "AliPay Gateway has been successfully activated"
+              }}</label>
+          {{/if}}
+        {{/if}}
+        {{#if this.canAcceptOmise}}
+          <label>{{t "Payment with Omise"}}</label>
+          <div class="field payments">
+            <div class="ui checkbox">
+              <Input
+                @type="checkbox"
+                @id="payment_by_omise"
+                @checked={{this.data.event.canPayByOmise}}
+              />
+              <label for="payment_by_omise">
+                {{t "Yes, accept payment through Omise Gateway"}}
+                <div class="ui hidden divider"></div>
+                <span class="text muted">
+                  {{t
+                    "Omise can accept Credit and Debit Cards, Net-Banking and AliPay. Find more details "
+                  }}
+                  <a
+                    href="https://www.omise.co/payment-methods"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >{{t "here"}}</a>.
+                </span>
+              </label>
+            </div>
+          </div>
+          {{#if this.data.event.canPayByOmise}}
+            <label>{{t "Omise Gateway has been successfully activated"}}</label>
+          {{/if}}
+        {{/if}}
+        {{#if this.canAcceptStripe}}
+          <label>{{t "Payment by Stripe"}}</label>
+          <div class="field payments">
+            <div class="ui checkbox">
+              <Input
+                @type="checkbox"
+                @id="payment_by_stripe"
+                @checked={{this.data.event.canPayByStripe}}
+              />
+              <label for="payment_by_stripe">
+                <span>{{t "YES, accept payment through Stripe"}}</span>
+                <br />
+                <span class="text muted">
+                  {{t
+                    "Stripe accepts Visa, Master and Amex. Find out more about Stripe "
+                  }}
+                  <a
+                    href="https://stripe.com/docs"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >{{t "here"}}</a>.
+                </span>
+              </label>
+            </div>
+          </div>
+          {{#if this.data.event.canPayByStripe}}
+            <div class="field">
+              {{#if
+                (or
+                  this.data.event.stripeAuthorization.stripeAuthCode
+                  this.data.event.stripeAuthorization.stripePublishableKey
+                )
+              }}
+                <label class="required">
+                  {{t
+                    "You have linked your Stripe account successfully. Click here to disconnect your account."
+                  }}
+                </label>
+                <a
+                  href="#"
+                  class="stripe-connect"
+                  role="button"
+                  {{action "disconnectStripe"}}
+                ><span>{{t "Disconnect Stripe Account"}}</span></a>
+              {{else}}
+                <label class="required">{{t
+                    "Connect to your Stripe account"
+                  }}</label>
+                <a
+                  href="#"
+                  class="stripe-connect"
+                  role="button"
+                  {{action "connectStripe"}}
+                ><span>{{t "Connect with Stripe"}}</span></a>
+              {{/if}}
+            </div>
+          {{/if}}
+        {{/if}}
+        <label>{{t "Offline Payments"}}</label>
+        <div class="field payments">
           <div class="ui checkbox">
             <Input
               @type="checkbox"
-              @id="billing_info_mandatory"
-              @checked={{this.data.event.isBillingInfoMandatory}}
+              @id="payment_by_cheque"
+              @checked={{this.data.event.canPayByCheque}}
             />
-            <label for="billing_info">
-              <strong>{{t 'Billing Info'}}:</strong>
-              {{t 'Require Billing Information from Ticket Buyer'}}
+            <label for="payment_by_cheque">
+              {{t "YES, accept payment by Cheque"}}
             </label>
           </div>
         </div>
-      <div class="ui hidden divider"></div>
+        {{#if this.data.event.canPayByCheque}}
+          <div class="field payments">
+            <label class="required">
+              {{t
+                "Enter you account name and other required details/instructions to ticket buyers"
+              }}
+            </label>
+            <Textarea
+              @id="cheque_details"
+              @value={{this.data.event.chequeDetails}}
+            />
+          </div>
+        {{/if}}
+
+        <div class="field payments">
+          <div class="ui checkbox">
+            <Input
+              @type="checkbox"
+              @id="payment_by_bank"
+              @checked={{this.data.event.canPayByBank}}
+            />
+            <label for="payment_by_bank">
+              {{t
+                "YES, accept payment by Telegraphic Transfer (TT) / Bank Transfer "
+              }}
+            </label>
+          </div>
+        </div>
+
+        {{#if this.data.event.canPayByBank}}
+          <div class="field">
+            <label class="required">
+              {{t
+                "Enter your bank details and other required details/instructions to ticket buyers"
+              }}
+            </label>
+            <Textarea
+              @id="bank_details"
+              @value={{this.data.event.bankDetails}}
+            />
+          </div>
+        {{/if}}
+
+        <div class="field payments">
+          <div class="ui checkbox">
+            <Input
+              @type="checkbox"
+              @id="payment_onsite"
+              @checked={{this.data.event.canPayOnsite}}
+            />
+            <label for="payment_onsite">
+              {{t "YES, accept payment at the event (on site) "}}
+            </label>
+          </div>
+        </div>
+
+        {{#if this.data.event.canPayOnsite}}
+          <div class="field">
+            <label class="required">
+              {{t
+                "Enter your payment instructions and other required details/instructions to ticket buyers"
+              }}
+            </label>
+            <Textarea
+              @id="on_site_details"
+              @value={{this.data.event.onsiteDetails}}
+            />
+          </div>
+        {{/if}}
+        <br />
+        <div class="field">
+          {{#if this.data.event.isTaxEnabled}}
+            <div class="ui card">
+              <div class="content tax-info">
+                <div class="meta">
+                  {{t "Tax Information"}}
+                </div>
+              </div>
+              <div class="content">
+                <div class="header">{{this.data.event.tax.name}}</div>
+                {{#if this.data.event.tax.shouldSendInvoice}}
+                  <div class="description">
+                    {{t
+                      "Organisation Name "
+                    }}{{this.data.event.tax.registeredCompany}}
+                  </div>
+                {{/if}}
+                <div class="description">
+                  {{this.data.event.tax.taxId}}<br />
+                  {{this.data.event.tax.rate}}% -
+                  {{if
+                    this.data.event.tax.isTaxIncludedInPrice
+                    "Included in ticket price"
+                    "Extra fee on ticket price"
+                  }}
+                </div>
+              </div>
+              <div class="ui bottom attached small buttons">
+                <button
+                  class="ui button"
+                  type="button"
+                  {{action "openTaxModal" false}}
+                >
+                  <i class="pencil icon"></i>
+                  {{t "Edit"}}
+                </button>
+
+                <button
+                  class="ui red button"
+                  type="button"
+                  {{action "deleteTaxInformation"}}
+                >
+                  <i class="trash icon"></i>
+                  {{t "Remove"}}
+                </button>
+              </div>
+            </div>
+          {{else}}
+            <button
+              type="button"
+              class="ui right labeled icon button"
+              {{action "openTaxModal" true}}
+            >
+              <i class="percent icon"></i>
+              {{t "Add Tax Information"}}
+            </button>
+          {{/if}}
+          <div class="ui hidden divider"></div>
+          <div class="field">
+            <div class="ui checkbox">
+              <Input
+                @type="checkbox"
+                @id="billing_info_mandatory"
+                @checked={{this.data.event.isBillingInfoMandatory}}
+              />
+              <label for="billing_info">
+                <strong>{{t "Billing Info"}}:</strong>
+                {{t "Require Billing Information from Ticket Buyer"}}
+              </label>
+            </div>
+          </div>
+          <div class="ui hidden divider"></div>
+        </div>
+      </div>
+    {{/if}}
+    <div class="field">
+      <label for="description">{{t "After Order Message"}}</label>
+      <Widgets::Forms::RichTextEditor
+        @textareaId="after_order_message"
+        @value={{this.data.event.afterOrderMessage}}
+      />
+    </div>
+  </div>
+
+  <div class="my-card">
+  
+  <button
+      type="button"
+      class="collapsible"
+      {{action "toggleColapse"}}
+    >{{t "Add Organizer or Group Information"}}</button>
+    <div class="collapsible-content {{this.collapseContent}}">
+      <div class="field">
+        <label for="owner_name">{{t "Organizer or Group Name"}}</label>
+        <Input
+          @type="text"
+          @id="owner_name"
+          @value={{this.data.event.ownerName}}
+        />
+      </div>
+      <div class="field">
+        <label for="owner_description">{{t
+            "About the Organizer or Group"
+          }}</label>
+        <Widgets::Forms::RichTextEditor
+          @id="owner_description"
+          @value={{this.data.event.ownerDescription}}
+        />
       </div>
     </div>
-  {{/if}}
-  <div class="field">
-    <label for="description">{{t 'After Order Message'}}</label>
-    <Widgets::Forms::RichTextEditor
-      @textareaId="after_order_message"
-      @value={{this.data.event.afterOrderMessage}} />
   </div>
+  {{!-- <div class="field">
+    <div class="ui slider checkbox">
+      <Input
+        @type="checkbox"
+        @checked={{this.data.event.hasOwnerInfo}}
+        @id="add_owner_information"
+      />
+      <label for="add_owner_information">{{t
+          "Add Organizer or Group Information"
+        }}</label>
+    </div>
+  </div> --}}
+
+  {{!-- {{#if this.data.event.hasOwnerInfo}}
+    <div class="field">
+      <label for="owner_name">{{t "Organizer or Group Name"}}</label>
+      <Input
+        @type="text"
+        @id="owner_name"
+        @value={{this.data.event.ownerName}}
+      />
+    </div>
+    <div class="field">
+      <label for="owner_description">{{t
+          "About the Organizer or Group"
+        }}</label>
+      <Widgets::Forms::RichTextEditor
+        @id="owner_description"
+        @value={{this.data.event.ownerDescription}}
+      />
+    </div>
+  {{/if}} --}}
 </form>
 
 <Modals::TaxInfoModal
@@ -624,7 +822,8 @@
   @loading={{this.loading}}
   @first={{true}}
   @device={{this.device}}
-  @onSaved={{action 'saveForm'}}
-  @onSaveDraft={{action 'saveDraft'}}
-  @move={{action 'move'}}
-  @onValidate={{action 'onValidate'}} />
+  @onSaved={{action "saveForm"}}
+  @onSaveDraft={{action "saveDraft"}}
+  @move={{action "move"}}
+  @onValidate={{action "onValidate"}}
+/>

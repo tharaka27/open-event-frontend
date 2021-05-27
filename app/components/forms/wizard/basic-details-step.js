@@ -14,6 +14,7 @@ import ENV from 'open-event-frontend/config/environment';
 import $ from 'jquery';
 import { tn } from 'open-event-frontend/utils/text';
 
+
 export default Component.extend(FormMixin, EventWizardMixin, {
 
   currentTimezone: moment.tz.guess(),
@@ -25,6 +26,8 @@ export default Component.extend(FormMixin, EventWizardMixin, {
   locationMenuItems: [tn.t('Venue'), tn.t('Online'), tn.t('Hybrid'), tn.t('To be announced')],
 
   selectedLocationType: 'Venue',
+
+  collapseContent: 'collapsible-none',
 
   deletedTickets: [],
 
@@ -567,6 +570,15 @@ export default Component.extend(FormMixin, EventWizardMixin, {
 
     onChange() {
       this.onValid(() => {});
+    },
+
+
+    toggleColapse() {
+      if (this.collapseContent === 'collapsible-none') {
+        this.set('collapseContent', 'collapsible-block');
+      } else {
+        this.set('collapseContent', 'collapsible-none');
+      }
     }
   }
 });

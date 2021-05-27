@@ -21,7 +21,7 @@
   {{#if this.data.event.isSessionsSpeakersEnabled}}
     <br>
     <h3 class="ui dividing header">
-      <i class="ordered list icon"></i>
+      {{!-- <i class="ordered list icon"></i> --}}
       <div class="content">
         {{t 'Sessions, Microlocations, Session Types'}}
       </div>
@@ -229,7 +229,7 @@
     {{/if}}
     <br>
     <h3 class="ui dividing header">
-      <i class="checkmark box icon"></i>
+      {{!-- <i class="checkmark box icon"></i> --}}
       <div class="content">
         {{t 'Customize submission forms'}}
       </div>
@@ -237,8 +237,9 @@
 
     <div class="ui two column stackable grid">
       <div class="column">
+        <label>{{t "Collect Speaker Details"}}</label>
         <Forms::Wizard::CustomForms::Table
-          @headerText={{t "Collect Speaker Details"}}
+          {{!-- @headerText={{t "Collect Speaker Details"}} --}}
           @fields={{this.customForm.speaker}}
           @updateField={{action (mut this.speakerField)}} 
           @removeField={{action "removeField"}}
@@ -253,8 +254,9 @@
 
       </div>
       <div class="column">
+        <label>{{t "Collect Session Details"}}</label>
         <Forms::Wizard::CustomForms::Table
-          @headerText={{t "Collect Session Details"}}
+          {{!-- @headerText={{t "Collect Session Details"}} --}}
           @fields={{this.customForm.session}}
           @updateField={{action (mut this.sessionField)}} 
           @removeField={{action "removeField"}}

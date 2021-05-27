@@ -1,6 +1,6 @@
 <form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forwards' on='submit' preventDefault=true}}>
 
-  <div class="ui centered grid">
+  {{!-- <div class="ui centered grid">
     <div class="column">
       <div class="ui {{if this.data.sponsors.length 'basic'}} segment">
         <div class="center aligned text">
@@ -19,7 +19,8 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> --}}
+
 
   {{#if this.data.sponsors.length}}
     {{#each this.sponsors as |sponsor index|}}
@@ -71,6 +72,7 @@
             @name="description" />
         </div>
         <div class="sponsors-step eight wide computer eight wide tablet field {{if this.device.isMobile 'less padding'}}">
+          <label class="required">{{t 'Logo'}}</label>
           <Widgets::Forms::ImageUpload
             @label={{t "Logo"}}
             @imageUrl={{sponsor.logoUrl}}
@@ -83,11 +85,15 @@
         <div class="ui section divider"></div>
       {{/if}}
     {{/each}}
-    <button type="button" class="ui primary {{if this.device.isMobile 'small'}} button" {{action 'addSponsor'}}>{{if this.sponsors.length (t 'Add another sponsor') (t 'Add sponsor')}}</button>
-    <div class="spacer-50"></div>
   {{else}}
     <div class="spacer-50"></div>
   {{/if}}
+
+    <button 
+  type="button" 
+  class="ui primary {{if this.device.isMobile 'small'}} button" {{action 'addSponsor'}}>
+  {{if this.sponsors.length (t 'Add another sponsor') (t 'Add sponsor')}}</button>
+  <div class="spacer-50"></div>
 
 </form>
 <Forms::Wizard::WizardFooter

@@ -10,6 +10,8 @@ import $ from 'jquery';
 
 export default Component.extend(EventWizardMixin, FormMixin, {
 
+  collapseContent: 'collapsible-none',
+
   // TODO: Removing the Session & Speaker Time Validations due to the weird and buggy behaviour. Will be restored once a perfect solution is found. Please check issue: https://github.com/fossasia/open-event-frontend/issues/3667
   getValidationRules() {
     $.fn.form.settings.rules.checkStartDateCFS = () => {
@@ -280,6 +282,14 @@ export default Component.extend(EventWizardMixin, FormMixin, {
     },
     onChange() {
       this.onValid(() => {});
+    },
+
+    toggleColapse() {
+      if (this.collapseContent === 'collapsible-none') {
+        this.set('collapseContent', 'collapsible-block');
+      } else {
+        this.set('collapseContent', 'collapsible-none');
+      }
     }
   }
 });

@@ -1,11 +1,12 @@
 <div class="ui hidden divider"></div>
 <div class="ui dividing">
-  <i class="checkmark box icon"></i>
+  {{!-- <i class="checkmark box icon"></i> --}}
   <span class="content">
     {{t 'Add Custom Form Field'}}
   </span>
 </div>
-<div {{did-update this.updated @field}} class="ui action input" style="width: inherit;">
+{{!-- <div {{did-update this.updated @field}} class="ui action input" style="width: inherit;"> --}}
+<div {{did-update this.updated @field}} class="ui action input" style="width: 30%;">
   <Input type="text" placeholder={{t "Field Name"}} @value={{this.name}} />
   <UiDropdown class="ui selection dropdown" @selected={{this.type}} @onChange={{action (mut this.type)}}>
     <div class="default text">

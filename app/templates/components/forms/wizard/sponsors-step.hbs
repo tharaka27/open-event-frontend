@@ -21,75 +21,78 @@
     </div>
   </div> --}}
 
-
-  {{#if this.data.sponsors.length}}
-    {{#each this.sponsors as |sponsor index|}}
-      <h4>
-        {{t 'Sponsor'}} #{{inc index}}
-        {{#if this.sponsors.length}}
-          <button type="button" class="ui mini red button right floated" {{action 'removeSponsor' sponsor}}>
-            <i class="trash icon"></i>
-            {{t 'Remove'}}
-          </button>
-        {{/if}}
-      </h4>
-      <br>
-      <div class="fields">
-        <div class="five wide field">
-          <label class="required">{{t 'Name'}}</label>
-          <Input
-            @type="text"
-            @value={{sponsor.name}}
-            @name="name" />
+  
+    {{#if this.data.sponsors.length}}
+      {{#each this.sponsors as |sponsor index|}}
+      <div class="my-card">
+        <h4>
+          {{t 'Sponsor'}} #{{inc index}}
+          {{#if this.sponsors.length}}
+            <button type="button" class="ui mini red button right floated" {{action 'removeSponsor' sponsor}}>
+              <i class="trash icon"></i>
+              {{t 'Remove'}}
+            </button>
+          {{/if}}
+        </h4>
+        <br>
+        <div class="fields">
+          <div class="five wide field">
+            <label class="required">{{t 'Name'}}</label>
+            <Input
+              @type="text"
+              @value={{sponsor.name}}
+              @name="name" />
+          </div>
+          <div class="two wide field">
+            <label>{{t 'Level'}}</label>
+            <Input
+              @type="number"
+              @value={{sponsor.level}}
+              @name="level"
+              @min={{0}} />
+          </div>
+          <div class="three wide field">
+            <label>{{t 'Type'}}</label>
+            <Input
+              @type="text"
+              @value={{sponsor.type}}
+              @name="type" />
+          </div>
+          <div class="six wide field">
+            <label>{{t 'URL'}}</label>
+            <Widgets::Forms::LinkField
+              @value={{sponsor.url}}
+              @onChange={{action (mut sponsor.url)}} />
+          </div>
         </div>
-        <div class="two wide field">
-          <label>{{t 'Level'}}</label>
-          <Input
-            @type="number"
-            @value={{sponsor.level}}
-            @name="level"
-            @min={{0}} />
-        </div>
-        <div class="three wide field">
-          <label>{{t 'Type'}}</label>
-          <Input
-            @type="text"
-            @value={{sponsor.type}}
-            @name="type" />
-        </div>
-        <div class="six wide field">
-          <label>{{t 'URL'}}</label>
-          <Widgets::Forms::LinkField
-            @value={{sponsor.url}}
-            @onChange={{action (mut sponsor.url)}} />
-        </div>
-      </div>
-      <div class="fields">
-        <div class="five wide computer eight wide tablet field">
-          <label>{{t 'Description'}}</label>
-          <Widgets::Forms::RichTextEditor
-            @value={{sponsor.description}}
-            @name="description" />
-        </div>
-        <div class="sponsors-step eight wide computer eight wide tablet field {{if this.device.isMobile 'less padding'}}">
-          <label class="required">{{t 'Logo'}}</label>
-          <Widgets::Forms::ImageUpload
-            @label={{t "Logo"}}
-            @imageUrl={{sponsor.logoUrl}}
-            @icon="image"
-            @hint={{t "Select Logo"}}
-            @maxSizeInKb={{1000}} />
+        <div class="fields">
+          <div class="five wide computer eight wide tablet field">
+            <label>{{t 'Description'}}</label>
+            <Widgets::Forms::RichTextEditor
+              @value={{sponsor.description}}
+              @name="description" />
+          </div>
+          <div class="sponsors-step eight wide computer eight wide tablet field {{if this.device.isMobile 'less padding'}}">
+            <label class="required">{{t 'Logo'}}</label>
+            <Widgets::Forms::ImageUpload
+              @label={{t "Logo"}}
+              @imageUrl={{sponsor.logoUrl}}
+              @icon="image"
+              @hint={{t "Select Logo"}}
+              @maxSizeInKb={{1000}} />
+          </div>
         </div>
       </div>
       {{#if (not-eq (inc index) this.data.event.sponsors.length)}}
         <div class="ui section divider"></div>
       {{/if}}
-    {{/each}}
-  {{else}}
-    <div class="spacer-50"></div>
-  {{/if}}
+      {{/each}}
+    {{else}}
+      <div class="spacer-50"></div>
+    {{/if}}
+  
 
-    <button 
+  <button 
   type="button" 
   class="ui primary {{if this.device.isMobile 'small'}} button" {{action 'addSponsor'}}>
   {{if this.sponsors.length (t 'Add another sponsor') (t 'Add sponsor')}}</button>

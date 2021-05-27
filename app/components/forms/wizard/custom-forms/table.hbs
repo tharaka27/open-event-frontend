@@ -59,7 +59,7 @@
           </td>
           <td class="border center aligned">
             <UiCheckbox
-              @class="slider"
+              {{!-- @class="slider" --}}
               @checked={{field.isIncluded}}
               @disabled={{field.isFixed}}
               @onChange={{action (mut field.isIncluded)}}
@@ -67,7 +67,7 @@
           </td>
           <td class="border center aligned">
             <UiCheckbox
-              @class="slider"
+              {{!-- @class="slider" --}}
               @checked={{field.isRequired}}
               @disabled={{field.isFixed}}
               @onChange={{action (mut field.isRequired)}}
@@ -75,7 +75,7 @@
           </td>
           <td class="border center aligned">
             <UiCheckbox
-              @class="slider"
+              {{!-- @class="slider" --}}
               @checked={{field.isPublic}}
               @onChange={{action (mut field.isPublic)}}
               @label={{if this.device.isMobile (t "Public")}} />

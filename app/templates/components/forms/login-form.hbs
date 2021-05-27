@@ -1,4 +1,4 @@
-<div class="ui stackable {{unless this.noSocial 'three' 'one'}} column doubling centered grid mt-4">
+<div class="ui stackable {{unless this.noSocial 'two' 'one'}} column doubling centered grid mt-4">
   <div class="flash-messages ui container">
     {{#each flashMessages.queue as |flash|}}
         <div class="ui {{flash.type}} message">
@@ -11,10 +11,10 @@
   <div class="column">
     <form class="ui large form" autocomplete="off">
       <div class="ui aligned segment basic no margin no padding">
-        <h3 class="weight-400">{{t 'Login'}}</h3>
+        <h2 class="weight-300 text centered">{{t 'Login'}}</h2>
       </div>
       <div class="ui segments">
-        <div class="ui segment {{if this.isLoading 'loading' ''}}">
+        <div class="ui segment {{if this.isLoading 'loading' ''}}" style="padding: 30px;">
           {{#if this.errorMessage}}
             <div class="ui negative message">
               <p>{{this.errorMessage}}</p>
@@ -26,15 +26,17 @@
             </div>
           {{/if}}
           <div class="field">
+            <label for="email">{{t 'Email Address'}}</label>
             <div class="ui left icon input">
               <i class="mail icon"></i>
-              <Input @name="email" placeholder={{t "Email ID"}} @value={{this.identification}} />
+              <Input @name="email" @id="email" @value={{this.identification}} />
             </div>
           </div>
           <div class="field">
+            <label for="password">{{t 'Password'}}</label>
             <div class="ui left icon input">
               <i class="lock icon"></i>
-              <Input class="rounded-r-none" @type="{{if this.showPass 'text' 'password'}}" @name="password" placeholder={{t "Password"}} @value={{this.password}} />
+              <Input class="rounded-r-none" @type="{{if this.showPass 'text' 'password'}}" @name="password" @id="password" @value={{this.password}} />
               <div class="ui small basic icon buttons rounded-l-none">
                 <button type="button" class="ui button" {{action 'showPassword'}}>
                   <i class="{{if this.showPass 'hide' 'unhide'}} basic icon"></i>
@@ -42,16 +44,17 @@
               </div>
             </div>
           </div>
-          <div class="ui center aligned segment basic">
+          <div class="ui center aligned segment basic" style="padding: 10px 0px 0px 0px">
             {{#if (and (gt this.counter 1) this.showHcaptcha)}}
               <HCaptcha @onSuccess={{action (mut this.captchaValidated)}} @onExpired={{action (mut this.captchaValidated)}}/>
             {{/if}}
-            <div class="ui vertical buttons">
-              <button type="submit" class="ui fluid teal submit button register {{if (and (and (gt this.counter 1) (not this.captchaValidated)) this.showHcaptcha) 'disabled'}}">
+            <div class="ui vertical buttons" style="width: 100%;">
+              <button type="submit" class="ui fluid teal submit button register {{if (and (and (gt this.counter 1) (not this.captchaValidated)) this.showHcaptcha) 'disabled'}}"
+              style="border-radius: 5px;">
                 {{t 'Login'}}
               </button>
-              <div class="ui center aligned segment basic">
-                <a href="{{href-to 'reset-password'}}" class="text muted"> {{t 'Forgot your password ?'}}</a>
+              <div class="ui center aligned segment basic" style="padding: 10px 0px 0px 0px">
+                <a href="{{href-to 'reset-password'}}" class="hyperlink"> {{t 'Forgot your password?'}}</a>
               </div>
               {{!--
               {{#unless noSocial}}
@@ -67,9 +70,15 @@
             </div>
           </div>
         </div>
-        <a href="{{href-to 'register'}}" class="ui secondary segment center aligned text muted weight-800">
-          {{t 'New to site? Create Account'}}
-        </a>
+      </div>
+      <div class="ui segments">
+        <p class="ui segment center aligned text  weight-500">New to site?
+          <span>
+            <a class="hyperlink" href="{{href-to 'register'}}" >
+              {{t ' Create Account'}}
+            </a>
+          </span>
+        </p>
       </div>
     </form>
   </div>

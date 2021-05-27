@@ -25,7 +25,7 @@ export default class LoginForm extends Component.extend(FormMixin) {
           rules      : [
             {
               type   : 'empty',
-              prompt : this.l10n.t('Please enter your email ID')
+              prompt : this.l10n.t('Please enter your email address')
             },
             {
               type   : 'email',

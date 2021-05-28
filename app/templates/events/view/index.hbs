@@ -83,7 +83,7 @@
 
       {{#if (and this.model.event.isSponsorsEnabled this.model.event.sponsors)}}
       <div class="event_dashboard_segment" id="event_sponsors" style="display: none;">
-        <Events::View::Overview::EventSponsors @data={{this.model.sponsors}} @columns={{this.columns}}
+        <Events::View::Overview::EventSponsors @data={{this.model.event.sponsors}} @columns={{this.columns}}
           @page={{this.page}} @per_page={{this.per_page}} @search={{this.search}} @sort_by={{this.sort_by}}
           @sort_dir={{this.sort_dir}} @filterOptions={{this.filterOptions}} />
       </div>

@@ -52,7 +52,7 @@ export default Component.extend(FormMixin, EventWizardMixin, {
       }
     },
     removeSponsor(sponsor) {
-      if(this.data.sponsors.length==1){
+      if (this.data.sponsors.length == 1) {
         this.data.event.isSponsorsEnabled = false;
       }
       sponsor.deleteRecord();

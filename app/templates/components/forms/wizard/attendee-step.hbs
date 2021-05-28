@@ -1,79 +1,58 @@
-<form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forwards' on='submit' preventDefault=true}}>
-
-  <div class="ui centered grid">
-    <div class="column">
-      <div class="ui {{if this.data.event.isTicketFormEnabled 'basic'}} segment">
-        <div class="center aligned text">
-          <div class=" field">
-            <div class="ui slider checkbox">
-              <Input
-                @type="checkbox"
-                @checked={{this.data.event.isTicketFormEnabled}} />
-              <label class="weight-300" style="font-size: large">
-                {{if this.data.event.isTicketFormEnabled (t 'Turn off') (t 'Turn on')}}
-                {{t 'Attendee Form'}}
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      {{!-- <div class="ui center aligned header">
-        {{t 'Information About Attendee Form'}}
-      </div>
-      <div class="ui muted text">
-        {{t 'The attendee form by default collects the name and email of an attendee. You also have the option to collect additional information such as contact data, position, organization and more. This information will be available together with the ticket information in a CSV file in the ticket section of your event.'}}
-      </div> --}}
-    </div>
-  </div>
-
-  {{!-- Included a topic Card--}}
-  <div class = "center topic-card">
-    <div class="ui center aligned header">
+<form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forwards' on='submit' preventDefault=true}} style="cursor: default;">
+  <div class="my-card" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
+    <h3 class="ui dividing header">
       {{t 'Information About Attendee Form'}}
-    </div>
-    <div class="ui muted text">
+    </h3>
+    <div class="ui muted aligned text" style="text-align: justify;">
       {{t 'The attendee form by default collects the name and email of an attendee. You also have the option to collect additional information such as contact data, position, organization and more. This information will be available together with the ticket information in a CSV file in the ticket section of your event.'}}
     </div>
-  {{!--end--}}
   </div>
-  <div class="ui hidden divider"></div>
-  <h3 class="ui dividing header">
-    <i class="checkmark box icon"></i>
-    <div class="content">
-      {{t 'Required Form Fields'}}
-    </div>
-  </h3>
-  <div class="ui two column stackable grid">
-    <div class="w-full column">
-      <Forms::Wizard::CustomForms::Table
-        @fields={{this.fixedFields}} />
-    </div>
-  </div>
-  {{#if this.data.event.isTicketFormEnabled}}
+
+  <div class="my-card" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
     <h3 class="ui dividing header">
-      <i class="checkmark box icon"></i>
-      <div class="content">
-        {{t 'Information to Collect'}}
-      </div>
+        {{t 'Required Form Fields'}}
     </h3>
     <div class="ui two column stackable grid">
       <div class="w-full column">
         <Forms::Wizard::CustomForms::Table
-          @fields={{this.editableFields}}
-          @removeField={{action "removeField"}}
-          @updateField={{action (mut this.field)}} 
-        />
+          @fields={{this.fixedFields}} />
       </div>
     </div>
-    <Forms::Wizard::CustomFormInput
-      @customForms={{this.data.customForms}}
-      @event={{this.data.event}}
-      @form="attendee"
-      @field={{this.field}}
-      @onSave={{action (mut this.field) null}} />
-  {{/if}}
+  </div>
+  
+  <div class="my-card" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
+    <h3 class="ui dividing header" style="background-color: #ffffff; display: flex; justify-content: space-between;">
+        {{t 'Optional Form Fields'}}
+        <button type="button" style="background-color: #ffffff; border: none" {{action "toggleColapse"}}>
+          <i class="dropdown icon collapsible" style="background-color: #ffffff;"></i>
+        </button>
+    </h3>
+    <div class="collapsible-content {{this.collapseContent}}" style="padding-left: 0px; padding-right: 0px; overflow: visible">
+      <div class="ui two column stackable grid" style="padding-bottom: 0px;">
+        <div class="w-full column">
+          <Forms::Wizard::CustomForms::Table
+            @fields={{this.editableFields}}
+            @removeField={{action "removeField"}}
+            @updateField={{action (mut this.field)}} 
+          />
+        </div>
+      </div>
+      <div class="ui two column stackable grid" style="margin-top: 0px;">
+        <div class="w-full column" style="padding-top: 0px;">
+            <Forms::Wizard::CustomFormInput
+              @customForms={{this.data.customForms}}
+              @event={{this.data.event}}
+              @form="attendee"
+              @field={{this.field}}
+              @onSave={{action (mut this.field) null}} />
+        </div>  
+      </div>
+    </div>
+  </div>
+  
   <div class="spacer-50"></div>
 </form>
+
 <Forms::Wizard::WizardFooter
     @event={{this.data.event}}
     @loading={{this.loading}}

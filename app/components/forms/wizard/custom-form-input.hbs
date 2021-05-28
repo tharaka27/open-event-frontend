@@ -1,25 +1,26 @@
 <div class="ui hidden divider"></div>
-<div class="ui dividing">
-  {{!-- <i class="checkmark box icon"></i> --}}
-  <span class="content">
-    {{t 'Add Custom Form Field'}}
-  </span>
+<div  style="width: 100%;">
+  <div class="ui dividing">
+    <span class="content">
+      {{t 'Add Custom Form Field'}}
+    </span>
+  </div>
+  <div {{did-update this.updated @field}} style="display: flex; justify-content: space-between">
+    <Input class="rounded-r-none" type="text" @id="field_name" @value={{this.name}} />
+    <UiDropdown class="ui selection dropdown rounded-r-none rounded-l-none" @selected={{this.type}} @onChange={{action (mut this.type)}}>
+      <div class="default text">
+        {{ this.type }}
+      </div>
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item" data-value="text">{{t "Short Answer"}}</div>
+        <div class="item" data-value="paragraph">{{t "Paragraph"}}</div>
+        <div class="item" data-value="number">{{t "Number"}}</div>
+      </div>
+    </UiDropdown>
+    <div class="rounded-l-none">
+      <button class="ui button h-full rounded-l-none" {{action 'addFormField'}} disabled={{not this.validIdentifier}}>{{if @field (t 'Save') (t 'Add')}}</button>
+    </div>  
+  </div>
 </div>
-{{!-- <div {{did-update this.updated @field}} class="ui action input" style="width: inherit;"> --}}
-<div {{did-update this.updated @field}} class="ui action input" style="width: 30%;">
-  <Input type="text" placeholder={{t "Field Name"}} @value={{this.name}} />
-  <UiDropdown class="ui selection dropdown" @selected={{this.type}} @onChange={{action (mut this.type)}}>
-    <div class="default text">
-      {{ this.type }}
-    </div>
-    <i class="dropdown icon"></i>
-    <div class="menu">
-      <div class="item" data-value="text">{{t "Short Answer"}}</div>
-      <div class="item" data-value="paragraph">{{t "Paragraph"}}</div>
-      <div class="item" data-value="number">{{t "Number"}}</div>
-    </div>
-  </UiDropdown>
-  <div>
-    <button class="ui button h-full" {{action 'addFormField'}} disabled={{not this.validIdentifier}}>{{if @field (t 'Save') (t 'Add')}}</button>
-  </div>  
-</div>
+

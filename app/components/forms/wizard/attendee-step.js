@@ -6,6 +6,8 @@ import { sortBy } from 'lodash-es';
 
 export default Component.extend(FormMixin, EventWizardMixin, {
 
+  collapseContent: 'collapsible-none',
+
   fixedFields: computed('data.customForms.@each', function() {
     return this.data.customForms?.filter(field => field.isFixed);
   }),
@@ -29,6 +31,14 @@ export default Component.extend(FormMixin, EventWizardMixin, {
   actions: {
     removeField(field) {
       field.deleteRecord();
+    },
+
+    toggleColapse() {
+      if (this.collapseContent === 'collapsible-none') {
+        this.set('collapseContent', 'collapsible-block');
+      } else {
+        this.set('collapseContent', 'collapsible-none');
+      }
     }
   }
 });

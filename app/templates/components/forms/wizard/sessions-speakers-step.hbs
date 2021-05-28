@@ -1,7 +1,7 @@
-<form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forward' on='submit' preventDefault=true}}>
+<form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forward' on='submit' preventDefault=true}} style="cursor: default">
 
   {{!-- Included a topic Card--}}
-    <div class = "center topic-card">
+    {{!-- <div class = "center topic-card">
       <div class="ui dividing left aligned header">
         {{t 'Information About Sessions and Speakers Form'}}
       </div>
@@ -11,36 +11,48 @@
         This sections also provides you the ability to customize your submissions formas and to 
         call out for speakers for your event if it is necessary.'}}
       </div>
-    </div>
+    </div> --}}
   {{!--end--}}
 
-  <div class="ui centered grid">
-    <div class="column">
-      <div class="ui {{if this.data.event.isSessionsSpeakersEnabled 'basic'}} segment">
-        <div class="left aligned text">
-          <div class="field">
-            <div class="ui slider checkbox"> 
-              <Input @type="checkbox"  class ="toggle" @checked={{this.data.event.isSessionsSpeakersEnabled}} />
-              <label class="weight-300" style="font-size: large">
-                {{if this.data.event.isSessionsSpeakersEnabled (t 'Turn off') (t 'Turn on')}}
-                {{t 'Sessions & Speakers'}}
-              </label>
+  <div class="my-card">
+    <h3 class="ui dividing header weight-300">
+      {{t 'Information About Sessions and Speakers Form'}}
+    </h3>
+    <div class="ui muted aligned text" style="text-align: justify;">
+      {{t 'The Sessions and Speakers form collects  information about session types of your event if there is any. 
+        You can add information about Microlocations and virtual online rooms of your event. 
+        This sections also provides you the ability to customize your submissions formas and to 
+        call out for speakers for your event if it is necessary.'}}
+    </div>
+  </div>
+  <div class="my-card">
+    <div class="ui centered grid">
+      <div class="column">
+        {{!-- <div class="ui {{if this.data.event.isSessionsSpeakersEnabled 'basic'}} segment"> --}}
+        <div class="ui {{if this.data.event.isSessionsSpeakersEnabled 'basic'}} basic">
+          <div class="left aligned text">
+            <div class="field">
+              <div class="ui slider checkbox"> 
+                <Input @type="checkbox"  class ="toggle" @checked={{this.data.event.isSessionsSpeakersEnabled}} />
+                <label class="weight-300" style="font-size: large">
+                  {{if this.data.event.isSessionsSpeakersEnabled (t 'Turn off') (t 'Turn on')}}
+                  {{t 'Sessions & Speakers'}}
+                </label>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+  
 
   {{#if this.data.event.isSessionsSpeakersEnabled}}
-    <br>
     <div class="my-card">
-      <h3 class="ui dividing header">
-        {{!-- <i class="ordered list icon"></i> --}}
-        <div class="content">
-          {{t 'Sessions, Microlocations, Session Types'}}
-        </div>
-      </h3>
+      <h3 class="ui dividing header weight-300">
+        {{t 'Sessions, Microlocations, Session Types'}}
+      </h3> 
+
       <div class="field">
         <label class="required">Tracks</label>
         {{#each this.tracks as |track|}}
@@ -136,8 +148,6 @@
         {{/each}}
       </div>
     </div>
-
-    <br>
 
     {{!--Moved under the tables because it was mis leading!--}}
     {{!-- <div class="field">
@@ -247,18 +257,16 @@
     <br> --}}
 
     <div class="my-card">
-      <h3 class="ui dividing header">
-        {{!-- <i class="checkmark box icon"></i> --}}
-        <div class="content">
-          {{t 'Customize submission forms'}}
-        </div>
+      
+      <h3 class="ui dividing header weight-300">
+        {{t 'Customize submission forms'}}
       </h3>
 
       <div class="ui two column stackable grid">
         <div class="column">
-            <div class="content">
-              <label>{{t "Collect Speaker Details"}}</label>
-            </div>
+            {{!-- <div class="content"> --}}
+              <label style="font-weight: bold;">{{t "Collect Speaker Details"}}</label>
+            {{!-- </div> --}}
               <Forms::Wizard::CustomForms::Table
                 {{!-- @headerText={{t "Collect Speaker Details"}} --}}
                 @fields={{this.customForm.speaker}}
@@ -276,7 +284,7 @@
         
         <div class="column">
             <div class="content">
-              <label>{{t "Collect Session Details"}}</label>
+              <label style="font-weight: bold;">{{t "Collect Session Details"}}</label>
             </div>
               <Forms::Wizard::CustomForms::Table
                 {{!-- @headerText={{t "Collect Session Details"}} --}}
@@ -295,8 +303,6 @@
       </div>
     </div>
   
-    <div class="spacer-50"></div>
-
     <div class="my-card">
       <div class="field">
         <div class="ui slider checkbox">
@@ -309,12 +315,19 @@
           <label for="add_call_for_speaker">{{t 'Enable Call For Speakers'}}</label>
         </div>
       </div>
-      {{#if this.hasCallForSpeaker}}
-        <h3 class="ui dividing header">
+    </div>
+
+    
+    {{#if this.hasCallForSpeaker}}
+      <div class="my-card">
+        {{!-- <h3 class="ui dividing header">
           <i class="announcement icon"></i>
           <div class="content">
             {{t 'Call for speakers'}}
           </div>
+        </h3> --}}
+        <h3 class="ui dividing header weight-300">
+          {{t 'Call for speakers'}}
         </h3>
         <div class="field">
           <label>{{t 'Announcement'}}</label>
@@ -401,8 +414,13 @@
               </div>
             </div>
         </div>
-      {{/if}}
-    </div>
+      </div>
+    <div class="spacer-50"></div>
+    {{else}}
+    <div class="spacer-50"></div>
+    {{/if}}
+    
+    
 
     {{!-- New location of Call for speakers -- Used a Collapse button to drop down the options for call for speakers!--}}
       {{!-- <div class="my-card">

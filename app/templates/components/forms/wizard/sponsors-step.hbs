@@ -1,4 +1,4 @@
-<form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forwards' on='submit' preventDefault=true}}>
+<form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forwards' on='submit' preventDefault=true}} style="cursor: default">
 
   {{!-- <div class="ui centered grid">
     <div class="column">
@@ -22,7 +22,7 @@
   </div> --}}
 
   {{!-- Included a topic Card--}}
-    <div class = "center topic-card">
+    {{!-- <div class = "center topic-card">
       <div class="ui dividing left aligned header">
         {{t 'Information About Sponsor Form'}}
       </div>
@@ -30,22 +30,34 @@
         {{t 'The Sponsor form collects the information about sponsors of your event if there are any. 
         You can add logo of the sponsor as a image with a description. This is an optional section, it is okay to leave this section blank if you dont have any sponsors for the event.'}}
       </div>
-    </div>
+    </div> --}}
   {{!--end--}}
 
-  
+    <div class="my-card">
+      <h3 class="ui dividing header weight-300">
+        {{t 'Information About Sponsor Form'}}
+      </h3>
+      <div class="ui muted aligned text" style="text-align: justify;">
+        {{t 'The Sponsor form collects the information about sponsors of your event if there are any. 
+          You can add logo of the sponsor as a image with a description. This is an optional section, it is okay to leave this section blank if you dont have any sponsors for the event.'}}
+      </div>
+    </div>
+
     {{#if this.data.sponsors.length}}
       {{#each this.sponsors as |sponsor index|}}
       <div class="my-card">
-        <h3 class="ui dividing header">
+        <h3 class="ui dividing header weight-300">
           {{t 'Sponsor'}} #{{inc index}}
+        </h3>
+        {{!-- <h3 class="ui dividing header">
+          {{t 'Sponsor'}} #{{inc index}} --}}
           {{!-- {{#if this.sponsors.length}}
             <button type="button" class="ui mini red button right floated" {{action 'removeSponsor' sponsor}}>
               <i class="trash icon"></i>
               {{t 'Remove'}}
             </button>
           {{/if}} --}}
-        </h3>
+        <!--</h3>-->
         {{#if this.sponsors.length}}
             <button type="button" class="ui mini red button right floated" {{action 'removeSponsor' sponsor}}>
               <i class="trash icon"></i>
@@ -104,9 +116,10 @@
         </div>
       </div>
       {{#if (not-eq (inc index) this.data.event.sponsors.length)}}
-        <div class="spacer-50"></div>
+        {{!-- <div class="spacer-50"></div> --}}
       {{/if}}
       {{/each}}
+      <div class="spacer-50"></div>
     {{else}}
       <div class="spacer-50"></div>
     {{/if}}

@@ -41,6 +41,7 @@ export default Component.extend(FormMixin, EventWizardMixin, {
       const incorrect_sponsors = sponsors.filter(function(sponsor) {
         return (!sponsor.get('name'));
       });
+      this.data.event.isSponsorsEnabled = true;
       if (incorrect_sponsors.length > 0) {
         this.notify.error(this.l10n.t('Please fill the required fields for existing sponsor items'), {
           id: 'req_field_sponsor'
@@ -51,6 +52,9 @@ export default Component.extend(FormMixin, EventWizardMixin, {
       }
     },
     removeSponsor(sponsor) {
+      if(this.data.sponsors.length==1){
+        this.data.event.isSponsorsEnabled = false;
+      }
       sponsor.deleteRecord();
     },
     toggleSponsors() {

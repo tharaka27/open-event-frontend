@@ -1,99 +1,217 @@
+{{!--
+
 <div class="mobile hidden row">
   <div class="ui menu">
-    <LinkTo
-      @route="index" class="header item" @activeClass="">
+    <LinkTo @route="index" class="header item" @activeClass="">
       <h3>{{this.settings.appName}}</h3>
     </LinkTo>
     <div class="right menu nav-bar">
-    {{#if (and this.isNotEventPageRoute this.isNotExplorePageRoute this.isNotWizardPageRoute)}}
+      {{#if (and this.isNotEventPageRoute this.isNotExplorePageRoute this.isNotWizardPageRoute)}}
       <div class="search-bar d-flex items-center space-between m-2 p-2">
-        <Input @class="prompt" @type="text" @key-up={{"handleKeyPress"}} @value={{this.event_name}} placeholder={{t "Search Events"}} />
+        <Input @class="prompt" @type="text" @key-up={{"handleKeyPress"}} @value={{this.event_name}}
+          placeholder={{t "Search Events" }} />
         <i class="search icon"></i>
       </div>
-    {{/if}}
-    {{#if (and (not this.session.isAuthenticated) this.isNotEventPageRoute)}}
-      <LinkTo
-        @route="pricing" class="item"
-        @activeClass="">{{t 'Pricing'}}</LinkTo>
-    {{/if}}
-      {{#if this.session.isAuthenticated}}
-        <NotificationDropdown />
+      {{/if}}
+      {{#if (and (not this.session.isAuthenticated) this.isNotEventPageRoute)}}
+      <LinkTo @route="pricing" class="item" @activeClass="">{{t 'Pricing'}}</LinkTo>
       {{/if}}
       {{#if this.session.isAuthenticated}}
-        <UiDropdown
-          @class="item"
-          @action="hide">
-          <Widgets::SafeImage
-            @isAvatar={{true}}
-            @class="ui avatar round image nav-bar-image"
-            @src={{if this.authManager.currentUser.avatarUrl this.authManager.currentUser.avatarUrl "/images/placeholders/avatar.png"}} />
-          {{if this.authManager.currentUser
-               (if this.authManager.currentUser.firstName this.authManager.currentUser.firstName this.authManager.currentUser.email)
-               'Welcome'}}
-          <i class="dropdown icon"></i>
-          <div class="menu profile-dropdown-menu">
-            <a href="{{href-to 'my-tickets'}}" class="item">{{t 'My Tickets'}}</a>
-            <a href="{{href-to 'my-sessions'}}" class="item">{{t 'My Sessions'}}</a>
-            <a href="{{href-to 'groups.list'}}" class="item">{{t 'Groups'}}</a>
-            <a href="{{href-to 'events.list' 'live'}}" class="item">{{t 'Manage Events'}}</a>
-            <div class="divider"></div>
-            <a href="{{href-to 'account.profile'}}" class="item">{{t 'Account'}}</a>
-            {{#if this.authManager.currentUser.isAnAdmin}}
-              <a href="{{href-to 'admin'}}" class="item">{{t 'Admin'}}</a>
-            {{/if}}
-            <div class="divider"></div>
-            <a href="#" role="button" class="item logout-button" {{action 'logout'}}><div class="d-flex">{{t 'Logout'}}<i
-                  class="ui sign out icon" style="margin-left: auto !important"></i></div></a>
-          </div>
-        </UiDropdown>
+      <NotificationDropdown />
+      {{/if}}
+      {{#if this.session.isAuthenticated}}
+      <UiDropdown @class="item" @action="hide">
+        <Widgets::SafeImage @isAvatar={{true}} @class="ui avatar round image nav-bar-image" @src={{if
+          this.authManager.currentUser.avatarUrl
+          this.authManager.currentUser.avatarUrl "/images/placeholders/avatar.png" }} />
+        {{if this.authManager.currentUser
+        (if this.authManager.currentUser.firstName this.authManager.currentUser.firstName
+        this.authManager.currentUser.email)
+        'Welcome'}}
+        <i class="dropdown icon"></i>
+        <div class="menu profile-dropdown-menu">
+          <a href="{{href-to 'my-tickets'}}" class="item">{{t 'My Tickets'}}</a>
+          <a href="{{href-to 'my-sessions'}}" class="item">{{t 'My Sessions'}}</a>
+          <a href="{{href-to 'groups.list'}}" class="item">{{t 'Groups'}}</a>
+          <a href="{{href-to 'events.list' 'live'}}" class="item">{{t 'Manage Events'}}</a>
+          <div class="divider"></div>
+          <a href="{{href-to 'account.profile'}}" class="item">{{t 'Account'}}</a>
+          {{#if this.authManager.currentUser.isAnAdmin}}
+          <a href="{{href-to 'admin'}}" class="item">{{t 'Admin'}}</a>
+          {{/if}}
+          <div class="divider"></div>
+          <a href="#" role="button" class="item logout-button" {{action 'logout' }}>
+            <div class="d-flex">{{t 'Logout'}}<i class="ui sign out icon" style="margin-left: auto !important"></i>
+            </div>
+          </a>
+        </div>
+      </UiDropdown>
       {{else}}
-        <a href="{{href-to 'login'}}" class="item">{{t 'Login'}}</a>
+      <a href="{{href-to 'login'}}" class="item">{{t 'Login'}}</a>
       {{/if}}
       {{#if (and this.isNotWizardPageRoute this.isNotEventPageRoute)}}
-        <LinkTo
-          @route="create" class="item ui blue text">
-          <div>
-            {{t 'Create Event'}}
-          </div>
-        </LinkTo>
+      <LinkTo @route="create" class="item ui blue text">
+        <div>
+          {{t 'Create Event'}}
+        </div>
+      </LinkTo>
       {{/if}}
     </div>
   </div>
 </div>
+--}}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<div class="mobile hidden row">
+  <div class="ui menu">
+    {{!-- Application name --}}
+    <LinkTo @route="index" class="header item" @activeClass="">
+      <h3>{{this.settings.appName}}</h3>
+    </LinkTo>
+
+    {{!-- Search bar --}}
+    <div class="right menu nav-bar">
+      {{#if (and this.isNotEventPageRoute this.isNotExplorePageRoute this.isNotWizardPageRoute)}}
+      <div class="search-bar d-flex items-center space-between m-2 p-2" style="min-width:300px;">
+        <Input @class="prompt" @type="text" @key-up={{"handleKeyPress"}} @value={{this.event_name}}
+          placeholder={{t "Search Events" }} />
+        <i class="search icon"></i>
+      </div>
+      {{/if}}
+
+
+      {{!-- Container to center search box --}}
+      <div class="container" style="min-width:300px;"></div>
+
+      {{!-- Pricing button --}}
+      {{#if (and (not this.session.isAuthenticated) this.isNotEventPageRoute)}}
+      <LinkTo @route="pricing" class="item" @activeClass="">{{t 'Pricing'}}</LinkTo>
+      {{/if}}
+
+
+
+      {{!-- Notification dropdown --}}
+      {{#if this.session.isAuthenticated}}
+      <NotificationDropdown />
+      {{/if}}
+
+      {{!-- Create event if not authenticated --}}
+      {{#if (and this.isNotWizardPageRoute this.isNotEventPageRoute this.session.isAuthenticated)}}
+      
+      <LinkTo @route="create" class="item ui blue text">
+        <div class="tooltip"><i class="fa fa-edit" style="color: black;"></i>
+          <span class="tooltiptext">{{t 'New Event'}}</span>
+        </div>
+      </LinkTo>
+      
+      {{/if}}
+
+      {{!-- Account details dropdown only if authenticated --}}
+      {{#if this.session.isAuthenticated}}
+      <UiDropdown @class="item" @action="hide">
+        <Widgets::SafeImage @isAvatar={{true}} @class="ui avatar round image nav-bar-image" @src={{if
+          this.authManager.currentUser.avatarUrl
+          this.authManager.currentUser.avatarUrl "/images/placeholders/avatar.png" }} />
+        {{!--
+        {{if this.authManager.currentUser
+        (if this.authManager.currentUser.firstName this.authManager.currentUser.firstName
+        this.authManager.currentUser.email)
+        'Welcome'}} --}}
+        <i class="dropdown icon"></i>
+        <div class="menu profile-dropdown-menu">
+          <a href="{{href-to 'account.profile'}}" class="item">{{t (if this.authManager.currentUser.firstName
+            this.authManager.currentUser.firstName
+            this.authManager.currentUser.email) }}</a>
+          <div class="divider"></div>
+          {{!--<a href="{{href-to 'my-tickets'}}" class="item">{{t 'My Tickets'}}</a>--}}
+          <a href="{{href-to 'my-tickets'}}" role="button" class="item ">
+            <div class="d-flex">{{t 'My Tickets'}}<i class="fa fa-ticket" style="margin-left: auto !important; padding-right:5%"></i>
+            </div>
+          </a>
+          
+          {{!--<a href="{{href-to 'my-sessions'}}" class="item">{{t 'My Sessions'}}</a>--}}
+          <a href="{{href-to 'my-sessions'}}" role="button" class="item ">
+            <div class="d-flex">{{t 'My Sessions'}}<i class="fa fa-file" style="margin-left: auto !important; padding-right:5%"></i>
+            </div>
+          </a>
+          {{!--<a href="{{href-to 'groups.list'}}" class="item">{{t 'My Groups'}}</a>--}}
+          <a href="{{href-to 'groups.list'}}" role="button" class="item ">
+            <div class="d-flex">{{t 'My Groups'}}<i class="fa fa-users" style="margin-left: auto !important; padding-right:5%"></i>
+            </div>
+          </a>
+          {{!--<a href="{{href-to 'events.list' 'live'}}" class="item">{{t 'My Events'}}</a>--}}
+          <a href="{{href-to 'events.list' 'live'}}" role="button" class="item ">
+            <div class="d-flex">{{t 'My Events'}}<i class="fa fa-calendar" style="margin-left: auto !important; padding-right:5%"></i>
+            </div>
+          </a>
+          <div class="divider"></div>
+          {{!--<a href="{{href-to 'account.profile'}}" class="item">{{t 'Account'}}</a>--}}
+          <a href="{{href-to 'account.profile'}}" role="button" class="item ">
+            <div class="d-flex">{{t 'Account'}}<i class="fa fa-user-circle" style="margin-left: auto !important; padding-right:5%"></i>
+            </div>
+          </a>
+          {{#if this.authManager.currentUser.isAnAdmin}}
+          {{!--<a href="{{href-to 'admin'}}" class="item">{{t 'Admin'}}</a>--}}
+          <a href="{{href-to 'admin'}}" role="button" class="item ">
+            <div class="d-flex">{{t 'Admin Panel'}}<i class="fa fa-edit" style="margin-left: auto !important; padding-right:5%"></i>
+            </div>
+          </a>
+          {{/if}}
+
+          <div class="divider"></div>
+          <a href="#" role="button" class="item logout-button" {{action 'logout' }}>
+            <div class="d-flex">{{t 'Logout'}}<i class="ui sign out icon" style="margin-left: auto !important"></i>
+            </div>
+          </a>
+        </div>
+      </UiDropdown>
+      {{else}}
+
+      {{!-- login button if not authenticated --}}
+      <a href="{{href-to 'login'}}" class="item">{{t 'Login'}}</a>
+      {{/if}}
+
+    </div>
+  </div>
+</div>
+
 <div class="mobile only row">
   <div class="ui navbar tiny menu">
     <a href="#" class="menu item open sidebar">
       <i class="large content icon"></i>
     </a>
-    <LinkTo
-      @route="index" class="item" @activeClass="">
+    <LinkTo @route="index" class="item" @activeClass="">
       <div class="ui header small text">{{this.settings.appName}}</div>
     </LinkTo>
     <div id="mobile-bar" class="search-bar search-bar-mobile d-flex items-center space-between m-1 p-2">
-      <Input @class="prompt" id="mobileSearchBar" @type="text" @key-up={{"handleKeyPress"}} @value={{this.event_name}} placeholder={{t "Search Events"}} />
+      <Input @class="prompt" id="mobileSearchBar" @type="text" @key-up={{"handleKeyPress"}} @value={{this.event_name}}
+        placeholder={{t "Search Events" }} />
       <i role="button" class="search icon" style="cursor: auto;" {{on "click" this.searchOnClick}}></i>
     </div>
     <div class="right menu nav-bar">
-      {{#if this.session.isAuthenticated}}
-        <NotificationDropdown
-          @notifications={{this.notifications}} />
-      {{/if}}
+      
       {{#if (and this.isNotEventPageRoute this.isNotExplorePageRoute this.isNotWizardPageRoute)}}
-        <div role="button" class="item ui" {{action "toggleMobileSearchBar"}} >
-          <i class="search icon"></i>
-        </div>
+      <div role="button" class="item ui" {{action "toggleMobileSearchBar" }}>
+        <i class="search icon"></i>
+      </div>
       {{/if}}
+      
       {{#if this.session.isAuthenticated}}
-        {{#if this.isNotWizardPageRoute}}
-          <LinkTo
-            @route="create" class="item ui blue button-text small text">
-            <div>
-              {{t 'Create Event'}}
-            </div>
-          </LinkTo>
-        {{/if}}
+      <NotificationDropdown @notifications={{this.notifications}} />
+      {{/if}}
+
+      {{#if this.session.isAuthenticated}}
+      {{#if this.isNotWizardPageRoute}}
+      <LinkTo @route="create" class="item ui blue text">
+        <div class="tooltip"><i class="fa fa-edit" style="color: black;"></i>
+          <span class="tooltiptext">{{t 'New Event'}}</span>
+        </div>
+      </LinkTo>
+      {{/if}}
       {{else}}
-        <a href="{{href-to 'login'}}" class="item">{{t 'Login'}}</a>
+      <a href="{{href-to 'login'}}" class="item">{{t 'Login'}}</a>
       {{/if}}
     </div>
   </div>

@@ -1,9 +1,9 @@
 <div class="ui container">
   <UnverifiedUserMessage />
   {{#if this.model.event.name}}
-    <h2 class="weight-300">{{t 'Creating'}} <span class="weight-500">{{this.model.event.name}}</span></h2>
+    <h2 class="weight-300">{{t 'Creating Event'}} {{this.model.event.name}}</h2>
   {{else}}
-    <h2 class="weight-300">{{t 'Create an Event'}}</h2>
+    <h2 class="weight-300">{{t 'Create Event'}}</h2>
   {{/if}}
   <div class="ui one column centered stacked grid event wizard">
     <div class="column mobile hidden">

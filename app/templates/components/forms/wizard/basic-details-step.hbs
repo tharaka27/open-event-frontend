@@ -2,9 +2,21 @@
   class="ui form {{if this.isLoading "loading"}}"
   autocomplete="off"
   novalidate
-  {{action "move" "forward" on="submit" preventDefault=true}}
+  {{action "move" "forward" on="submit" preventDefault=true}} style="cursor: default;"
 >
   <div class="my-card">
+    <h3 class="ui dividing header weight-300">
+      {{t 'Information About Basic Details'}}
+    </h3>
+    <div class="ui muted aligned text" style="text-align: justify;">
+      {{t 'The basic details form collects the basic details of the event such as event name, event type, date to be held, location, ticketing system, etc. You need to first fill at least the required details in this section to proceed to other sections or publish the event.'}}
+    </div>
+  </div>
+
+  <div class="my-card">
+    <h3 class="ui dividing header weight-300">
+      {{t 'Primary Information'}}
+    </h3>
     <div class="field">
       <label class="required" for="name">{{t "Event Name"}}</label>
       <Input @type="text" @id="name" @value={{this.data.event.name}} />
@@ -243,6 +255,9 @@
   </div>
 
   <div class="my-card">
+    <h3 class="ui dividing header weight-300">
+      {{t 'Ticketing Information'}}
+    </h3>
     <div class="field">
       <label class="required">{{t "Ticketing System"}}</label>
       <div
@@ -370,7 +385,7 @@
     --}}
       <br />
       <div class="field">
-        <h4>{{t "Add Payment Details"}}</h4>
+        <h4 class="weight-300">{{t "Add Payment Details"}}</h4>
         <div class="two fields">
           <CountryDropdown
             @required={{true}}
@@ -410,7 +425,7 @@
       </div>
       <br />
       <div class="field">
-        <h4>{{t "Choose payment methods"}}</h4>
+        <h4 class="weight-300">{{t "Choose payment methods"}}</h4>
         {{#if this.canAcceptPayPal}}
           <label>{{t "Payment by PayPal"}}</label>
           <div class="field payments">
@@ -431,6 +446,7 @@
                     href="https://www.paypal.com/us/webapps/mpp/popup/about-payment-methods"
                     target="_blank"
                     rel="noopener noreferrer"
+                    class="hyperlink"
                   >
                     {{t "click here"}}
                   </a>.
@@ -485,6 +501,7 @@
                     href="https://stripe.com/docs/sources/alipay"
                     target="_blank"
                     rel="noopener noreferrer"
+                    class="hyerlink"
                   >{{t "here"}}</a>.
                 </span>
               </label>
@@ -516,6 +533,7 @@
                     href="https://www.omise.co/payment-methods"
                     target="_blank"
                     rel="noopener noreferrer"
+                    class="hyerlink"
                   >{{t "here"}}</a>.
                 </span>
               </label>
@@ -545,6 +563,7 @@
                     href="https://stripe.com/docs"
                     target="_blank"
                     rel="noopener noreferrer"
+                    class="hyerlink"
                   >{{t "here"}}</a>.
                 </span>
               </label>
@@ -751,13 +770,19 @@
   </div>
 
   <div class="my-card">
-  
-  <button
+  <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
+        {{t 'Organizer or Group Information'}}
+        <button type="button" style="background-color: #ffffff; border: none" {{action "toggleColapse"}}>
+          <i class="dropdown icon collapsible" style="background-color: #ffffff;"></i>
+        </button>
+    </h3>
+  {{!-- <button
       type="button"
       class="collapsible"
       {{action "toggleColapse"}}
-    >{{t "Add Organizer or Group Information"}}</button>
-    <div class="collapsible-content {{this.collapseContent}}">
+    >{{t "Add Organizer or Group Information"}}</button> --}}
+
+    <div class="collapsible-content {{this.collapseContent}}" style="padding-left: 0px; padding-right: 0px">
       <div class="field">
         <label for="owner_name">{{t "Organizer or Group Name"}}</label>
         <Input
@@ -777,6 +802,7 @@
       </div>
     </div>
   </div>
+  <div class="spacer-50"></div>
   {{!-- <div class="field">
     <div class="ui slider checkbox">
       <Input

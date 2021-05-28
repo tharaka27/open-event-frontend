@@ -1,5 +1,6 @@
 <div class="ui container">
-  <h2 class="weight-300">{{t 'Editing'}} {{this.model.event.name}}</h2>
+  <div class="mb-8"></div>
+  <h2 class="weight-300">{{t 'Editing Event'}} {{this.model.event.name}}</h2>
   <div class="ui one column centered stacked grid event wizard">
     <div class="column mobile hidden">
       <Widgets::StepsIndicator @steps={{this.model.steps}} @autoSteps={{true}} @enableAll={{true}} />

@@ -34,6 +34,7 @@ export default Component.extend(FormMixin, EventWizardMixin, {
     },
 
     toggleColapse() {
+      this.data.event.isTicketFormEnabled = true;
       if (this.collapseContent === 'collapsible-none') {
         this.set('collapseContent', 'collapsible-block');
       } else {

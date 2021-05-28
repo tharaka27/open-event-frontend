@@ -1,6 +1,6 @@
 <form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forwards' on='submit' preventDefault=true}} style="cursor: default;">
-  <div class="my-card" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
-    <h3 class="ui dividing header">
+  <div class="my-card">
+    <h3 class="ui dividing header weight-300">
       {{t 'Information About Attendee Form'}}
     </h3>
     <div class="ui muted aligned text" style="text-align: justify;">
@@ -8,8 +8,8 @@
     </div>
   </div>
 
-  <div class="my-card" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
-    <h3 class="ui dividing header">
+  <div class="my-card">
+    <h3 class="ui dividing header weight-300">
         {{t 'Required Form Fields'}}
     </h3>
     <div class="ui two column stackable grid">
@@ -20,8 +20,8 @@
     </div>
   </div>
   
-  <div class="my-card" style="margin-left: 0px; margin-right: 0px; margin-bottom: 0px;">
-    <h3 class="ui dividing header" style="background-color: #ffffff; display: flex; justify-content: space-between;">
+  <div class="my-card">
+    <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
         {{t 'Optional Form Fields'}}
         <button type="button" style="background-color: #ffffff; border: none" {{action "toggleColapse"}}>
           <i class="dropdown icon collapsible" style="background-color: #ffffff;"></i>
@@ -49,7 +49,6 @@
       </div>
     </div>
   </div>
-  
   <div class="spacer-50"></div>
 </form>
 

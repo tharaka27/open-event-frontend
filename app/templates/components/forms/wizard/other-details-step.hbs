@@ -4,13 +4,23 @@
   novalidate
   {{action "move" "forward" on="submit" preventDefault=true}}
 >
+  <div class="my-card">
+      <h3 class="ui dividing header weight-300">
+        {{t 'Information About Additional Info'}}
+      </h3>
+      <div class="ui muted aligned text" style="text-align: justify;">
+        {{t 'This section collects additional information about the event'}}
+      </div>
+  </div>
 
   <div class="my-card">
+    <h3 class="ui dividing header weight-300">
+        {{t 'Links & Social Media'}}
+    </h3>
     <div class="grouped fields" id="social-links">
-      <div class="ui header">
+      {{!-- <div class="ui header">
         <label>{{t "Links & Social Media"}}</label>
-      </div>
-
+      </div> --}}
       <h4>
         {{t "Social Media"}}
         <UiPopup
@@ -81,9 +91,12 @@
   </div>
 
   <div class="my-card">
+    <h3 class="ui dividing header weight-300">
+        {{t 'Refund Policy'}}
+    </h3>
     <div class="field">
       <div class="ui header">
-        <label for="refund_policy">{{t "Refund Policy"}}</label>
+        {{!-- <label for="refund_policy">{{t "Refund Policy"}}</label> --}}
         <div class="sub header">
           {{t
             "Refunds to be processed by the organizer through payment provider. Refund payments to attendees cannot be made on the eventyay platform. Please go to your payment provider, make a refund and mark the ticket as refunded in the eventyay platform."
@@ -98,8 +111,11 @@
   </div>
 
   <div class="my-card">
+    <h3 class="ui dividing header weight-300">
+        {{t 'Listing Privacy'}}
+    </h3>
     <div class="grouped fields">
-      <label for="privacy">{{t "Listing Privacy"}}</label>
+      {{!-- <label for="privacy">{{t "Listing Privacy"}}</label> --}}
       <div class="field">
         <div class="ui radio checkbox">
           {{widgets/forms/radio-button
@@ -144,10 +160,16 @@
         <label for="add_code_of_conduct">{{t "Add Code of Conduct"}}</label>
       </div>
     </div> --}}
-    <button type="button" class="collapsible" {{action "toggleColapse"}}>{{t
+    <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
+        {{t 'Code of Conduct'}}
+        <button type="button" style="background-color: #ffffff; border: none" {{action "toggleColapse"}}>
+          <i class="dropdown icon collapsible" style="background-color: #ffffff;"></i>
+        </button>
+    </h3>
+    {{!-- <button type="button" class="collapsible" {{action "toggleColapse"}}>{{t
         "Add Code of Conduct"
-      }}</button>
-    <div class="collapsible-content {{this.collapseContent}}">
+      }}</button> --}}
+    <div class="collapsible-content {{this.collapseContent}}" style="padding-left: 0px; padding-right: 0px">
 
       {{#if this.hasCodeOfConduct}}
         <div class="field">
@@ -160,7 +182,11 @@
       {{/if}}
     </div>
   </div>
+
   <div class="my-card">
+     <h3 class="ui dividing header weight-300">
+        {{t 'License'}}
+    </h3>
     <div class="field">
       <label for="license">
         {{t "License of Event Data & Content"}}
@@ -224,7 +250,7 @@
       </div>
     </div>
   </div>
-  <br />
+  <div class="spacer-50"></div>
 
 </form>
 

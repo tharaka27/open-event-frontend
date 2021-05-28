@@ -1,24 +1,6 @@
 <form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forward' on='submit' preventDefault=true}}>
 
-  <div class="ui centered grid">
-    <div class="column">
-      <div class="ui {{if this.data.event.isSessionsSpeakersEnabled 'basic'}} segment">
-        <div class="center aligned text">
-          <div class="field">
-            <div class="ui slider checkbox">
-              <Input @type="checkbox" @checked={{this.data.event.isSessionsSpeakersEnabled}} />
-              <label class="weight-300" style="font-size: large">
-                {{if this.data.event.isSessionsSpeakersEnabled (t 'Turn off') (t 'Turn on')}}
-                {{t 'Sessions & Speakers'}}
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-    {{!-- Included a topic Card--}}
+  {{!-- Included a topic Card--}}
     <div class = "center topic-card">
       <div class="ui center aligned header">
         {{t 'Information About Sessions and Speakers Form'}}
@@ -31,6 +13,24 @@
       </div>
     </div>
   {{!--end--}}
+
+  <div class="ui centered grid">
+    <div class="column">
+      <div class="ui {{if this.data.event.isSessionsSpeakersEnabled 'basic'}} segment">
+        <div class="left aligned text">
+          <div class="field">
+            <div class="ui slider checkbox">
+              <Input @type="checkbox"  class ="toggle" @checked={{this.data.event.isSessionsSpeakersEnabled}} />
+              <label class="weight-300" style="font-size: large">
+                {{if this.data.event.isSessionsSpeakersEnabled (t 'Turn off') (t 'Turn on')}}
+                {{t 'Sessions & Speakers'}}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 
   {{#if this.data.event.isSessionsSpeakersEnabled}}
     <br>
@@ -139,7 +139,6 @@
 
     <br>
 
-    <div class="ui section divider"></div>
     {{!--Moved under the tables because it was mis leading!--}}
     {{!-- <div class="field">
       <div class="ui slider checkbox">
@@ -195,54 +194,54 @@
           />
         <label for="add_soft_closing">{{t 'Enable Soft Closing'}}</label>
       </div>
-    </div>
-    {{#if this.hasSoftClosing}}
-      <div class="fields">
-        <div class="five wide field" style="max-width: 300px !important;">
-          <label for="soft_end_date">{{t 'Soft Ends'}}</label>
-          <Widgets::Forms::DatePicker @type="text" @name="soft_end_date" @placeholder="MM/DD/YYYY" @onChange={{action "onChange"}} @value={{this.data.speakersCall.softEndsAtDate}} />
-        </div>
-        <div class="two wide field">
-          <label for="soft_end_time">&nbsp;</label>
+      </div>
+      {{#if this.hasSoftClosing}}
+        <div class="fields">
+          <div class="five wide field" style="max-width: 300px !important;">
+           <label for="soft_end_date">{{t 'Soft Ends'}}</label>
+            <Widgets::Forms::DatePicker @type="text" @name="soft_end_date" @placeholder="MM/DD/YYYY" @onChange={{action "onChange"}} @value={{this.data.speakersCall.softEndsAtDate}} />
+          </div>
+          <div class="two wide field">
+            <label for="soft_end_time">&nbsp;</label>
           <Widgets::Forms::TimePicker @type="text" @name="soft_end_time" @placeholder="HH:MM" @onChange={{action "onChange"}} @value={{this.data.speakersCall.softEndsAtTime}} />
         </div>
-      </div>
-    {{/if}}
-      <div class="field">
-        <label>{{t 'Private Link'}}</label>
-        <div class="ui action input fluid">
-          <input type="text" name="private_link" value="{{concat this.data.event.url '/cfs/' this.data.speakersCall.hash}}" placeholder="{{concat this.data.event '/cfs/' this.data.speakersCall.hash}}" readonly>
-          <UiPopup @on="click" @content={{t "Link copied to clipboard"}} @position="bottom right">
-            <CopyButton @clipboardText={{concat this.data.event.url "/cfs/" this.data.speakersCall.hash}} @class="ui black right labeled icon copy button h-full">
-              <i class="copy icon"></i>
-              {{t 'Copy'}}
-            </CopyButton>
-          </UiPopup>
         </div>
-        <span class="text muted">
-          {{t 'Share this link to get private submission independently of open/closed Call for Speakers at any time. (the link will be active once the event is saved)'}}
-        </span>
-      </div>
-      <div class="grouped fields">
-        <label for="privacy">{{t 'Privacy'}}</label>
+      {{/if}}
         <div class="field">
-          <div class="ui radio checkbox">
-            {{widgets/forms/radio-button this.value name='privacy' id='privacy_public' value='public' checked=this.data.speakersCall.privacy}}
-            <label for="privacy_public">
-              <strong>{{t 'Public'}}:</strong>
-              {{t 'Display this publicly. Anybody will be able to submit a proposal within the dates chosen, once the event is published.'}}
-            </label>
+          <label>{{t 'Private Link'}}</label>
+          <div class="ui action input fluid">
+            <input type="text" name="private_link" value="{{concat this.data.event.url '/cfs/' this.data.speakersCall.hash}}" placeholder="{{concat this.data.event '/cfs/' this.data.speakersCall.hash}}" readonly>
+            <UiPopup @on="click" @content={{t "Link copied to clipboard"}} @position="bottom right">
+              <CopyButton @clipboardText={{concat this.data.event.url "/cfs/" this.data.speakersCall.hash}} @class="ui black right labeled icon copy button h-full">
+                <i class="copy icon"></i>
+                {{t 'Copy'}}
+              </CopyButton>
+            </UiPopup>
           </div>
+          <span class="text muted">
+           {{t 'Share this link to get private submission independently of open/closed Call for Speakers at any time. (the link will be active once the event is saved)'}}
+          </span>
         </div>
-        <div class="field">
-          <div class="ui radio checkbox">
-            {{widgets/forms/radio-button this.value name='privacy' id='privacy_private' value='private' checked=this.data.speakersCall.privacy}}
-            <label for="privacy_private">
-              <strong>{{t 'Private'}}:</strong>
-              {{t 'Do not display this publicly. Proposals can be submitted only using the private link.'}}
-            </label>
+        <div class="grouped fields">
+          <label for="privacy">{{t 'Privacy'}}</label>
+          <div class="field">
+            <div class="ui radio checkbox">
+              {{widgets/forms/radio-button this.value name='privacy' id='privacy_public' value='public' checked=this.data.speakersCall.privacy}}
+              <label for="privacy_public">
+                <strong>{{t 'Public'}}:</strong>
+                {{t 'Display this publicly. Anybody will be able to submit a proposal within the dates chosen, once the event is published.'}}
+              </label>
+            </div>
           </div>
-        </div>
+          <div class="field">
+            <div class="ui radio checkbox">
+              {{widgets/forms/radio-button this.value name='privacy' id='privacy_private' value='private' checked=this.data.speakersCall.privacy}}
+             <label for="privacy_private">
+                <strong>{{t 'Private'}}:</strong>
+                {{t 'Do not display this publicly. Proposals can be submitted only using the private link.'}}
+              </label>
+            </div>
+          </div>
       </div>
     {{/if}}
     <br> --}}
@@ -297,53 +296,53 @@
     </div>
   
     <div class="spacer-50"></div>
-  {{else}}
-    <div class="spacer-50"></div>
-  {{/if}}
 
-<div class="ui section divider"></div>
-{{!-- New location of Call for speakers -- Used a Collapse button to drop down the options for call for speakers!--}}
-  <div class="my-card">
-    <button
-      type="button"
-      class="collapsible"
-      {{action "toggleColapse"}}
-      >{{t "Enable Call For Speakers"}}
-    </button>
-    <div class="collapsible-content {{this.collapseContent}}">
-      <h3 class="ui dividing header">
-        <i class="announcement icon"></i>
-        <div class="content">
-          {{t 'Call for speakers'}}
-        </div>
-      </h3>
+    <div class="my-card">
       <div class="field">
-        <label>{{t 'Announcement'}}</label>
-        <Widgets::Forms::RichTextEditor @name="announcement" @textareaId="announcement" @value={{this.data.speakersCall.announcement}} />
-      </div>
-      <div class="fields">
-        <div class="five wide field">
-          <label class="required" for="start_date">{{t 'Starts'}}</label>
-          <Widgets::Forms::DatePicker @type="text" @name="start_date" @placeholder="MM/DD/YYYY"  @onChange={{action "onChange"}} @value={{this.data.speakersCall.startsAtDate}} />
-        </div>
-        <div class="two wide field">
-          <label for="start_time">&nbsp;</label>
-          <Widgets::Forms::TimePicker @type="text" @name="start_time" @placeholder="HH:MM" @onChange={{action "onChange"}} @value={{this.data.speakersCall.startsAtTime}} />
-        </div>
-        <div class="five wide field">
-          <label class="required" for="end_date">{{t 'Ends'}}</label>
-          <Widgets::Forms::DatePicker @type="text" @name="end_date" @placeholder="MM/DD/YYYY" @rangePosition="end" @onChange={{action "onChange"}} @value={{this.data.speakersCall.endsAtDate}} />
-        </div>
-        <div class="two wide field">
-          <label for="end_time">&nbsp;</label>
-          <Widgets::Forms::TimePicker @type="text" @name="end_time" @placeholder="HH:MM" @onChange={{action "onChange"}} @value={{this.data.speakersCall.endsAtTime}} />
-        </div>
-        <div class="five wide field">
-          <label class="required" for="timezone">{{t 'Timezone'}}</label>
-          <Input @type="text" @disabled={{true}} @value={{this.data.event.timezone}} />
+        <div class="ui slider checkbox">
+          <Input
+            @type="checkbox"
+            @checked={{this.hasCallForSpeaker}}
+            @id="add_call_for_speaker" 
+            {{action "resetCFS" on="change"}}
+            />
+          <label for="add_call_for_speaker">{{t 'Enable Call For Speakers'}}</label>
         </div>
       </div>
-      <div class="field">
+      {{#if this.hasCallForSpeaker}}
+        <h3 class="ui dividing header">
+          <i class="announcement icon"></i>
+          <div class="content">
+            {{t 'Call for speakers'}}
+          </div>
+        </h3>
+        <div class="field">
+          <label>{{t 'Announcement'}}</label>
+          <Widgets::Forms::RichTextEditor @name="announcement" @textareaId="announcement" @value={{this.data.speakersCall.announcement}} />
+        </div>
+        <div class="fields">
+          <div class="five wide field">
+            <label class="required" for="start_date">{{t 'Starts'}}</label>
+            <Widgets::Forms::DatePicker @type="text" @name="start_date" @placeholder="MM/DD/YYYY"  @onChange={{action "onChange"}} @value={{this.data.speakersCall.startsAtDate}} />
+          </div>
+          <div class="two wide field">
+            <label for="start_time">&nbsp;</label>
+            <Widgets::Forms::TimePicker @type="text" @name="start_time" @placeholder="HH:MM" @onChange={{action "onChange"}} @value={{this.data.speakersCall.startsAtTime}} />
+          </div>
+          <div class="five wide field">
+            <label class="required" for="end_date">{{t 'Ends'}}</label>
+            <Widgets::Forms::DatePicker @type="text" @name="end_date" @placeholder="MM/DD/YYYY" @rangePosition="end" @onChange={{action "onChange"}} @value={{this.data.speakersCall.endsAtDate}} />
+          </div>
+          <div class="two wide field">
+            <label for="end_time">&nbsp;</label>
+            <Widgets::Forms::TimePicker @type="text" @name="end_time" @placeholder="HH:MM" @onChange={{action "onChange"}} @value={{this.data.speakersCall.endsAtTime}} />
+          </div>
+          <div class="five wide field">
+            <label class="required" for="timezone">{{t 'Timezone'}}</label>
+            <Input @type="text" @disabled={{true}} @value={{this.data.event.timezone}} />
+          </div>
+        </div>
+        <div class="field">
         <div class="ui slider checkbox">
           <Input
             @type="checkbox"
@@ -353,57 +352,165 @@
             />
           <label for="add_soft_closing">{{t 'Enable Soft Closing'}}</label>
         </div>
-      </div>
-      {{#if this.hasSoftClosing}}
-        <div class="fields">
-          <div class="five wide field" style="max-width: 300px !important;">
+        </div>
+        {{#if this.hasSoftClosing}}
+          <div class="fields">
+            <div class="five wide field" style="max-width: 300px !important;">
             <label for="soft_end_date">{{t 'Soft Ends'}}</label>
-            <Widgets::Forms::DatePicker @type="text" @name="soft_end_date" @placeholder="MM/DD/YYYY" @onChange={{action "onChange"}} @value={{this.data.speakersCall.softEndsAtDate}} />
-          </div>
-          <div class="two wide field">
-            <label for="soft_end_time">&nbsp;</label>
+              <Widgets::Forms::DatePicker @type="text" @name="soft_end_date" @placeholder="MM/DD/YYYY" @onChange={{action "onChange"}} @value={{this.data.speakersCall.softEndsAtDate}} />
+            </div>
+            <div class="two wide field">
+              <label for="soft_end_time">&nbsp;</label>
             <Widgets::Forms::TimePicker @type="text" @name="soft_end_time" @placeholder="HH:MM" @onChange={{action "onChange"}} @value={{this.data.speakersCall.softEndsAtTime}} />
           </div>
+          </div>
+        {{/if}}
+          <div class="field">
+            <label>{{t 'Private Link'}}</label>
+            <div class="ui action input fluid">
+              <input type="text" name="private_link" value="{{concat this.data.event.url '/cfs/' this.data.speakersCall.hash}}" placeholder="{{concat this.data.event '/cfs/' this.data.speakersCall.hash}}" readonly>
+              <UiPopup @on="click" @content={{t "Link copied to clipboard"}} @position="bottom right">
+                <CopyButton @clipboardText={{concat this.data.event.url "/cfs/" this.data.speakersCall.hash}} @class="ui black right labeled icon copy button h-full">
+                  <i class="copy icon"></i>
+                  {{t 'Copy'}}
+                </CopyButton>
+              </UiPopup>
+            </div>
+            <span class="text muted">
+            {{t 'Share this link to get private submission independently of open/closed Call for Speakers at any time. (the link will be active once the event is saved)'}}
+            </span>
+          </div>
+          <div class="grouped fields">
+            <label for="privacy">{{t 'Privacy'}}</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                {{widgets/forms/radio-button this.value name='privacy' id='privacy_public' value='public' checked=this.data.speakersCall.privacy}}
+                <label for="privacy_public">
+                  <strong>{{t 'Public'}}:</strong>
+                  {{t 'Display this publicly. Anybody will be able to submit a proposal within the dates chosen, once the event is published.'}}
+                </label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                {{widgets/forms/radio-button this.value name='privacy' id='privacy_private' value='private' checked=this.data.speakersCall.privacy}}
+              <label for="privacy_private">
+                  <strong>{{t 'Private'}}:</strong>
+                  {{t 'Do not display this publicly. Proposals can be submitted only using the private link.'}}
+                </label>
+              </div>
+            </div>
         </div>
       {{/if}}
-      <div class="field">
-        <label>{{t 'Private Link'}}</label>
-        <div class="ui action input fluid">
-          <input type="text" name="private_link" value="{{concat this.data.event.url '/cfs/' this.data.speakersCall.hash}}" placeholder="{{concat this.data.event '/cfs/' this.data.speakersCall.hash}}" readonly>
-          <UiPopup @on="click" @content={{t "Link copied to clipboard"}} @position="bottom right">
-            <CopyButton @clipboardText={{concat this.data.event.url "/cfs/" this.data.speakersCall.hash}} @class="ui black right labeled icon copy button h-full">
-              <i class="copy icon"></i>
-              {{t 'Copy'}}
-            </CopyButton>
-          </UiPopup>
-        </div>
-        <span class="text muted">
-          {{t 'Share this link to get private submission independently of open/closed Call for Speakers at any time. (the link will be active once the event is saved)'}}
-        </span>
-      </div>
-      <div class="grouped fields">
-        <label for="privacy">{{t 'Privacy'}}</label>
-        <div class="field">
-          <div class="ui radio checkbox">
-            {{widgets/forms/radio-button this.value name='privacy' id='privacy_public' value='public' checked=this.data.speakersCall.privacy}}
-            <label for="privacy_public">
-              <strong>{{t 'Public'}}:</strong>
-              {{t 'Display this publicly. Anybody will be able to submit a proposal within the dates chosen, once the event is published.'}}
-            </label>
-          </div>
-        </div>
-        <div class="field">
-          <div class="ui radio checkbox">
-            {{widgets/forms/radio-button this.value name='privacy' id='privacy_private' value='private' checked=this.data.speakersCall.privacy}}
-            <label for="privacy_private">
-              <strong>{{t 'Private'}}:</strong>
-              {{t 'Do not display this publicly. Proposals can be submitted only using the private link.'}}
-            </label>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
+
+    {{!-- New location of Call for speakers -- Used a Collapse button to drop down the options for call for speakers!--}}
+      {{!-- <div class="my-card">
+        <button
+          type="button"
+          class="collapsible"
+          {{action "toggleColapse"}}
+          >{{t "Enable Call For Speakers"}}
+        </button>
+        <div class="collapsible-content {{this.collapseContent}}">
+          <h3 class="ui dividing header">
+            <i class="announcement icon"></i>
+            <div class="content">
+              {{t 'Call for speakers'}}
+            </div>
+          </h3>
+          <div class="field">
+            <label>{{t 'Announcement'}}</label>
+            <Widgets::Forms::RichTextEditor @name="announcement" @textareaId="announcement" @value={{this.data.speakersCall.announcement}} />
+          </div>
+          <div class="fields">
+            <div class="five wide field">
+              <label class="required" for="start_date">{{t 'Starts'}}</label>
+              <Widgets::Forms::DatePicker @type="text" @name="start_date" @placeholder="MM/DD/YYYY"  @onChange={{action "onChange"}} @value={{this.data.speakersCall.startsAtDate}} />
+            </div>
+            <div class="two wide field">
+              <label for="start_time">&nbsp;</label>
+              <Widgets::Forms::TimePicker @type="text" @name="start_time" @placeholder="HH:MM" @onChange={{action "onChange"}} @value={{this.data.speakersCall.startsAtTime}} />
+            </div>
+            <div class="five wide field">
+              <label class="required" for="end_date">{{t 'Ends'}}</label>
+              <Widgets::Forms::DatePicker @type="text" @name="end_date" @placeholder="MM/DD/YYYY" @rangePosition="end" @onChange={{action "onChange"}} @value={{this.data.speakersCall.endsAtDate}} />
+            </div>
+            <div class="two wide field">
+              <label for="end_time">&nbsp;</label>
+              <Widgets::Forms::TimePicker @type="text" @name="end_time" @placeholder="HH:MM" @onChange={{action "onChange"}} @value={{this.data.speakersCall.endsAtTime}} />
+            </div>
+            <div class="five wide field">
+              <label class="required" for="timezone">{{t 'Timezone'}}</label>
+              <Input @type="text" @disabled={{true}} @value={{this.data.event.timezone}} />
+            </div>
+          </div>
+          <div class="field">
+            <div class="ui slider checkbox">
+              <Input
+                @type="checkbox"
+                @checked={{this.hasSoftClosing}}
+                @id="add_soft_closing" 
+                {{action "resetSoftClosing" on="change"}}
+                />
+              <label for="add_soft_closing">{{t 'Enable Soft Closing'}}</label>
+            </div>
+          </div>
+          {{#if this.hasSoftClosing}}
+            <div class="fields">
+              <div class="five wide field" style="max-width: 300px !important;">
+                <label for="soft_end_date">{{t 'Soft Ends'}}</label>
+                <Widgets::Forms::DatePicker @type="text" @name="soft_end_date" @placeholder="MM/DD/YYYY" @onChange={{action "onChange"}} @value={{this.data.speakersCall.softEndsAtDate}} />
+              </div>
+              <div class="two wide field">
+                <label for="soft_end_time">&nbsp;</label>
+                <Widgets::Forms::TimePicker @type="text" @name="soft_end_time" @placeholder="HH:MM" @onChange={{action "onChange"}} @value={{this.data.speakersCall.softEndsAtTime}} />
+              </div>
+            </div>
+          {{/if}}
+          <div class="field">
+            <label>{{t 'Private Link'}}</label>
+            <div class="ui action input fluid">
+              <input type="text" name="private_link" value="{{concat this.data.event.url '/cfs/' this.data.speakersCall.hash}}" placeholder="{{concat this.data.event '/cfs/' this.data.speakersCall.hash}}" readonly>
+              <UiPopup @on="click" @content={{t "Link copied to clipboard"}} @position="bottom right">
+                <CopyButton @clipboardText={{concat this.data.event.url "/cfs/" this.data.speakersCall.hash}} @class="ui black right labeled icon copy button h-full">
+                  <i class="copy icon"></i>
+                  {{t 'Copy'}}
+                </CopyButton>
+              </UiPopup>
+            </div>
+            <span class="text muted">
+              {{t 'Share this link to get private submission independently of open/closed Call for Speakers at any time. (the link will be active once the event is saved)'}}
+            </span>
+          </div>
+          <div class="grouped fields">
+            <label for="privacy">{{t 'Privacy'}}</label>
+            <div class="field">
+              <div class="ui radio checkbox">
+                {{widgets/forms/radio-button this.value name='privacy' id='privacy_public' value='public' checked=this.data.speakersCall.privacy}}
+                <label for="privacy_public">
+                  <strong>{{t 'Public'}}:</strong>
+                  {{t 'Display this publicly. Anybody will be able to submit a proposal within the dates chosen, once the event is published.'}}
+                </label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                {{widgets/forms/radio-button this.value name='privacy' id='privacy_private' value='private' checked=this.data.speakersCall.privacy}}
+                <label for="privacy_private">
+                  <strong>{{t 'Private'}}:</strong>
+                  {{t 'Do not display this publicly. Proposals can be submitted only using the private link.'}}
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div> --}}
+
+  {{else}}
+    <div class="spacer-50"></div>
+  {{/if}}
+
 
 
   {{!-- <div class="field">

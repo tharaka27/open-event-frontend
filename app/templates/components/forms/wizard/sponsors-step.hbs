@@ -84,8 +84,10 @@
               @value={{sponsor.description}}
               @name="description" />
           </div>
-          <div class="sponsors-step eight wide computer eight wide tablet field {{if this.device.isMobile 'less padding'}}">
-            <label class="required">{{t 'Logo'}}</label>
+          {{!-- Padding was too much, dont align with the description lable--}}
+          {{!-- <div class="sponsors-step eight wide computer eight wide tablet field {{if this.device.isMobile 'less padding'}}"> --}}
+          <div class="five wide computer eight wide tablet field {{if this.device.isMobile 'less padding'}}">
+            <label class="required" style="padding-bottom:6%;">{{t 'Logo'}}</label>
             <Widgets::Forms::ImageUpload
               @label={{t "Logo"}}
               @imageUrl={{sponsor.logoUrl}}

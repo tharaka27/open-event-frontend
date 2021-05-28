@@ -1,27 +1,105 @@
+<script>
+
+  function showSegment(seg) {
+    let segments = document.getElementsByClassName('event_dashboard_segment');
+    let segmentLinks = document.getElementsByClassName('event-segment-link');
+    var i;
+    for (i = 0; i < segments.length; i++) {
+      segments[i].style.display = 'none';
+    }
+    for (i = 0; i < segmentLinks.length; i++) {
+      segmentLinks[i].className = segmentLinks[i].className.replace("active", "");
+    }
+    document.getElementById(seg).style.display = 'block';
+    var selectedLink = document.getElementById(seg + "_link");
+    selectedLink.className = "active " + selectedLink.className;
+  }
+
+</script>
+
 <div class="ui grid stackable">
   <div class="row">
-    <div class="eight wide column">
-      <Events::View::Overview::EventSetupChecklist @data={{this.model}} />
+
+    <div class="{{if this.device.isMobile 'sixteen' 'three'}} wide column">
+      <div class="content ui fluid segments" style="border: 0;">
+        <TabbedNavigation @isVertical={{true}}>
+
+          <a id="event_checklist_link" class="ember-view event-segment-link active item" href="#"
+            onclick="showSegment('event_checklist')">
+            Event Checklist
+          </a>
+
+          <a id="event_highlight_link" class="ember-view event-segment-link item" href="#"
+            onclick="showSegment('event_highlight')">
+            Highlight
+          </a>
+
+          <a id="event_website_link" class="ember-view event-segment-link item" href="#"
+            onclick="showSegment('event_website')">
+            Website Generator
+          </a>
+
+          {{#if (and this.model.event.isSponsorsEnabled this.model.event.sponsors)}}
+          <a id="event_sponsors_link" class="ember-view event-segment-link item" href="#"
+            onclick="showSegment('event_sponsors')">
+            Sponsors
+          </a>
+          {{/if}}
+
+          <a id="event_tickets_link" class="ember-view event-segment-link item" href="#"
+            onclick="showSegment('event_tickets')">
+            Tickets
+          </a>
+
+          {{#if this.model.event.isSessionsSpeakersEnabled}}
+          <a id="event_sessions_link" class="ember-view event-segment-link item" href="#"
+            onclick="showSegment('event_sessions')">
+            Sessions and Speakers
+          </a>
+          {{/if}}
+
+          <a id="event_team_link" class="ember-view event-segment-link item" href="#"
+            onclick="showSegment('event_team')">
+            Team Members
+          </a>
+        </TabbedNavigation>
+
+      </div>
+    </div>
+
+    <div class="{{if this.device.isMobile 'sixteen' 'thirteen'}} wide column" id="segment_column">
+
+      <div class="event_dashboard_segment" id="event_checklist">
+        <Events::View::Overview::EventSetupChecklist @data={{this.model}} />
+      </div>
+
+      <div class="event_dashboard_segment" id="event_highlight" style="display: none;">
+        <Events::View::Overview::GeneralInfo @data={{this.model}} />
+      </div>
+
+      <div class="event_dashboard_segment" id="event_website" style="display: none;">
+        <Events::View::Overview::EventApps @eventId={{this.model.event.id}} />
+      </div>
+
       {{#if (and this.model.event.isSponsorsEnabled this.model.event.sponsors)}}
-        <Events::View::Overview::EventSponsors
-          @data={{this.model.sponsors}}
-          @columns={{this.columns}}
-          @page={{this.page}}
-          @per_page={{this.per_page}}
-          @search={{this.search}}
-          @sort_by={{this.sort_by}}
-          @sort_dir={{this.sort_dir}}
-          @filterOptions={{this.filterOptions}} />
-        {{/if}}
-      <Events::View::Overview::EventApps @eventId={{this.model.event.id}} />
-    </div>
-    <div class="eight wide column">
-      <Events::View::Overview::GeneralInfo @data={{this.model}} />
-      <Events::View::Overview::EventTickets @data={{this.model}} />
-      {{#if this.model.event.isSessionsSpeakersEnabled}}
-        <Events::View::Overview::SpeakerSession @data={{this.model}} />
+      <div class="event_dashboard_segment" id="event_sponsors" style="display: none;">
+        <Events::View::Overview::EventSponsors @data={{this.model.sponsors}} @columns={{this.columns}}
+          @page={{this.page}} @per_page={{this.per_page}} @search={{this.search}} @sort_by={{this.sort_by}}
+          @sort_dir={{this.sort_dir}} @filterOptions={{this.filterOptions}} />
+      </div>
       {{/if}}
-      <Events::View::Overview::ManageRoles @data={{this.model}} @showLink={{true}} />
+
+      <div class="event_dashboard_segment" id="event_tickets" style="display: none;">
+        <Events::View::Overview::EventTickets @data={{this.model}} />
+      </div>
+      <div class="event_dashboard_segment" id="event_sessions" style="display: none;">
+        <Events::View::Overview::SpeakerSession @data={{this.model}} />
+      </div>
+      <div class="event_dashboard_segment" id="event_team" style="display: none;">
+        <Events::View::Overview::ManageRoles @data={{this.model}} @showLink={{true}} />
+      </div>
+
     </div>
+
   </div>
 </div>

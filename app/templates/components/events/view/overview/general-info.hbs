@@ -1,5 +1,5 @@
 <div class="content">
-  <div class="header">{{t 'Overview'}}</div>
+  <div class="header">{{t 'Highlight'}}</div>
 </div>
 
 {{#if (eq this.data.event.state 'published')}}
@@ -15,8 +15,8 @@
   </div>
   {{else}}
   <div class="content">
-    <div class="ui {{if this.device.isMobile 'small' 'medium'}} header">
-      {{t 'Your event is not live yet. Make it live now'}}
+    <div class="ui {{if this.device.isMobile 'small' 'medium'}}">
+      {{t 'Your event is not published yet.'}}
     </div>
   </div>
 {{/if}}

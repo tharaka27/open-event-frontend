@@ -6,7 +6,7 @@
     </span>
   </div>
   <div {{did-update this.updated @field}} style="display: flex; justify-content: space-between">
-    <Input class="rounded-r-none" type="text" @id="field_name" @value={{this.name}} />
+    <Input class="rounded-r-none" type="text"  @value={{this.name}} />
     <UiDropdown class="ui selection dropdown rounded-r-none rounded-l-none" @selected={{this.type}} @onChange={{action (mut this.type)}}>
       <div class="default text">
         {{ this.type }}

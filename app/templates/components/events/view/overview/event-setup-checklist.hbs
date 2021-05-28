@@ -4,110 +4,124 @@
 <div class="content">
 
   <div class="ui grid stackable">
-    <div class="row">
 
-      <div class="column {{if this.device.isMobile '' 'three wide'}} center aligned text">
-        <a href="{{href-to 'events.view.edit.basic-details'}}"
-          class="ui segment {{unless this.data.event.name 'secondary'}} grid no margin">
-          <div class="sixteen wide column">
-            <i class="{{if this.data.event.name 'checkmark green' 'warning black'}} big icon"></i>
-          </div>
-          <div>
-            <h4 class="ui header">
-              {{t 'Basic Details'}} </h4>
-          </div>
-          <div>
-            <div class="sub header">
+    <div class="sixteen wide column">
+      <TabbedNavigation @isVertical={{true}}>
+
+        <a class="ember-view item" href="{{href-to 'events.view.edit.basic-details'}}">
+          <div class="row">
+            <span>
+              <i class="{{if this.data.event.name 'checkmark green' 'warning black'}} icon"></i>
+            </span>
+            <span style="font-weight: bold;">
+              {{t 'Basic Details'}} </span>
+
+            <span class="sub header">
+              <i class="right chevron small icon"></i>
+              {{#if this.device.isMobile }}
+              <div>{{t 'Basic information including title, date, venue, ticketing'}}</div>
+              {{else }}
               {{t 'Basic information including title, date, venue, ticketing'}}
-            </div>
+              {{/if}}
+            </span>
           </div>
         </a>
-      </div>
 
-      <div class="column {{if this.device.isMobile '' 'three wide'}} center aligned text">
-        <a href="{{href-to 'events.view.edit.other-details'}}"
-          class="ui segment {{unless this.data.event.socialLinks 'secondary'}} grid no margin">
-          <div class="sixteen wide column">
-            <i class="{{if this.data.event.socialLinks 'checkmark green' 'warning black'}} big icon"></i>
-          </div>
-          <div>
-            <h4 class="ui header">
-              {{t 'Additional Information'}} </h4>
-          </div>
-          <div>
-            <div class="sub header">
+        <a class="ember-view item" href="{{href-to 'events.view.edit.other-details'}}">
+          <div class="row">
+            <span>
+              <i class="{{if this.data.event.socialLinks 'checkmark green' 'warning black'}} icon"></i>
+            </span>
+            <span style="font-weight: bold;">
+              {{t 'Additional Information'}} </span>
+
+            <span class="sub header">
+              <i class="right chevron small icon"></i>
+              {{#if this.device.isMobile }}
+              <div>{{t 'Links, social media, privacy, code of conduct'}}</div>
+              {{else }}
               {{t 'Links, social media, privacy, code of conduct'}}
-            </div>
+              {{/if}}
+            </span>
           </div>
         </a>
-      </div>
 
-      <div class="column {{if this.device.isMobile '' 'three wide'}} center aligned text">
-        <a href="{{href-to 'events.view.edit.attendee'}}"
-          class="ui segment {{unless this.data.event.isTicketFormEnabled 'secondary'}} grid no margin">
-          <div class="sixteen wide column">
-            <i class="{{if this.data.event.isTicketFormEnabled 'checkmark green' 'warning black'}} big icon"></i>
-          </div>
-          <div>
-            <h4 class="ui header">
-              {{t 'Attendee Form'}} </h4>
-          </div>
-          <div>
-            <div class="sub header">
+        <a class="ember-view item" href="{{href-to 'events.view.edit.attendee'}}">
+          <div class="row">
+            <span>
+              <i class="{{if this.data.event.isTicketFormEnabled 'checkmark green' 'warning black'}} icon"></i>
+            </span>
+            <span style="font-weight: bold;">
+              {{t 'Attendee Form'}} </span>
+
+            <span class="sub header">
+              <i class="right chevron small icon"></i>
+              {{#if this.device.isMobile }}
+              <div>{{t 'Information to be collected from attendees'}}</div>
+              {{else }}
               {{t 'Information to be collected from attendees'}}
-            </div>
+              {{/if}}
+            </span>
           </div>
         </a>
-      </div>
 
-      <div class="column {{if this.device.isMobile '' 'three wide'}} center aligned text">
-        <a href="{{href-to 'events.view.edit.sponsors'}}"
-          class="ui {{unless this.data.event.isSponsorsEnabled 'secondary'}} segment grid no margin">
-          <div class="sixteen wide column">
-            <i class="{{if this.data.event.isSponsorsEnabled 'checkmark green' 'warning black'}} big icon"></i>
-          </div>
-          <div>
-            <h4 class="ui header">
-              {{t 'Sponsors'}} </h4>
-          </div>
-          <div>
-            <div class="sub header">
+        <a class="ember-view item" href="{{href-to 'events.view.edit.sponsors'}}">
+          <div class="row">
+            <span>
+              <i class="{{if this.data.event.isSponsorsEnabled 'checkmark green' 'warning black'}} icon"></i>
+            </span>
+            <span style="font-weight: bold;">
+              {{t 'Sponsors'}} </span>
+
+            <span class="sub header">
+              <i class="right chevron small icon"></i>
+              {{#if this.device.isMobile }}
+              <div>{{t 'Details and logos of sponsors'}}</div>
+              {{else }}
               {{t 'Details and logos of sponsors'}}
-            </div>
+              {{/if}}
+            </span>
           </div>
         </a>
-      </div>
 
-      <div class="column {{if this.device.isMobile '' 'three wide'}} center aligned text">
-        <a href="{{href-to 'events.view.edit.sessions-speakers'}}"
-          class="ui {{unless this.data.event.isSessionsSpeakersEnabled 'secondary'}} segment grid no margin">
-          <div class="sixteen wide column">
-            <i class="{{if this.data.event.isSessionsSpeakersEnabled 'checkmark green' 'warning black'}} big icon"></i>
-          </div>
+        <a class="ember-view item" href="{{href-to 'events.view.edit.sessions-speakers'}}">
           <div class="row">
-            <h4 class="ui header">
-              {{t 'Session, Tracks & Microlocations'}} </h4>
-            <div class="sub header">
-              {{t 'Tracks details and colors, session lengths, room locations'}}
-            </div>
+            <span>
+              <i class="{{if this.data.event.isSessionsSpeakersEnabled 'checkmark green' 'warning black'}} icon"></i>
+            </span>
+            <span style="font-weight: bold;">
+              {{t 'Sessions and Speakers'}} </span>
+
+            <span class="sub header">
+              <i class="right chevron small icon"></i>
+              {{#if this.device.isMobile }}
+              <div>{{t 'Session details, Speaker details, and Information collecting forms'}}</div>
+              {{else}}
+              {{t 'Session details, Speaker details, and Information collecting forms'}}
+              {{/if}}
+            </span>
           </div>
-          <div class="row">
-            <div>
-              <i class="{{if this.data.event.speakersCall.announcement 'checkmark green' 'warning black'}} icon"></i>
-              <h4 class="ui header">
-                {{t 'Call For Speakers'}}</h4>
-            </div>
-            <div>
-              <div class="sub header">
+
+          <div class="row" style="margin-top: 1%;">
+              <span>
+                <i class="{{if this.data.event.speakersCall.announcement 'checkmark green' 'warning black'}} icon"></i>
+              </span>
+              <span style="font-weight: bold;">
+                {{t 'Call For Speakers'}} </span>
+              <span class="sub header">
+                <i class="right chevron small icon"></i>
+                {{#if this.device.isMobile }}
+                <div>{{t 'Call for speakers announcement and dates'}}</div>
+                {{else}}
                 {{t 'Call for speakers announcement and dates'}}
-              </div>
-            </div>
+                {{/if}}
+              </span>
           </div>
         </a>
-      </div>
 
-
+      </TabbedNavigation>
     </div>
+
   </div>
 
 </div>

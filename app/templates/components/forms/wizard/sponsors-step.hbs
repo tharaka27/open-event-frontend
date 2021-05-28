@@ -23,7 +23,7 @@
 
   {{!-- Included a topic Card--}}
     <div class = "center topic-card">
-      <div class="ui center aligned header">
+      <div class="ui dividing left aligned header">
         {{t 'Information About Sponsor Form'}}
       </div>
       <div class="ui muted text">
@@ -37,15 +37,21 @@
     {{#if this.data.sponsors.length}}
       {{#each this.sponsors as |sponsor index|}}
       <div class="my-card">
-        <h4>
+        <h3 class="ui dividing header">
           {{t 'Sponsor'}} #{{inc index}}
-          {{#if this.sponsors.length}}
+          {{!-- {{#if this.sponsors.length}}
+            <button type="button" class="ui mini red button right floated" {{action 'removeSponsor' sponsor}}>
+              <i class="trash icon"></i>
+              {{t 'Remove'}}
+            </button>
+          {{/if}} --}}
+        </h3>
+        {{#if this.sponsors.length}}
             <button type="button" class="ui mini red button right floated" {{action 'removeSponsor' sponsor}}>
               <i class="trash icon"></i>
               {{t 'Remove'}}
             </button>
           {{/if}}
-        </h4>
         <br>
         <div class="fields">
           <div class="five wide field">
@@ -98,7 +104,7 @@
         </div>
       </div>
       {{#if (not-eq (inc index) this.data.event.sponsors.length)}}
-        <div class="ui section divider"></div>
+        <div class="spacer-50"></div>
       {{/if}}
       {{/each}}
     {{else}}

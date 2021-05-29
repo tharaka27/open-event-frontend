@@ -106,9 +106,17 @@
     <div class="fields">
       <div class="five wide field">
         <label class="required" for="start_date">{{t "Starts"}}</label>
-        <Widgets::Forms::DatePicker @type="text" @name="start_date" @placeholder="MM/DD/YYYY"
-          @value={{this.data.event.startsAtDate}} @onChange={{pipe-action (action "updateSalesEndDate" )
-          (action "onChange" ) }} />
+        <Widgets::Forms::DatePicker
+          @type="text"
+          @name="start_date"
+          @placeholder="MM/DD/YYYY"
+          @rangePosition="end"
+          @value={{this.data.event.startsAtDate}}
+          @onChange={{pipe-action
+            (action "updateSalesEndDate")
+            (action "onChange")
+          }}
+        />
       </div>
       <div class="three wide field">
         <label for="start_time">&nbsp;</label>
@@ -175,27 +183,13 @@
               <label class="required">{{t "Ticket Name"}}</label>
             </div>
             <div class="three wide column">
-              <label class="required">{{t "Price"}}</label>
+              <label class="required">{{t "Price" }} ( {{ this.data.event.paymentCurrency }}  ) </label>
             </div>
             <div class="four wide column">
               <label class="required">{{t "Quantity"}}</label>
             </div>
             <div class="column">
               <label>{{t "Options"}}</label>
-          <div class="ui stackable celled five column grid ticket-header">
-            <div class="row weight-600">
-              <div class="five wide column">
-                <label class="required">{{t "Ticket Name"}}</label>
-              </div>
-              <div class="three wide column">
-                <label class="required">{{t "Price" }} ( {{ this.data.event.paymentCurrency }}  ) </label>
-              </div>
-              <div class="four wide column">
-                <label class="required">{{t "Quantity"}}</label>
-              </div>
-              <div class="column">
-                <label>{{t "Options"}}</label>
-              </div>
             </div>
           </div>
         </div>
@@ -560,7 +554,7 @@
 
   <div class="my-card">
     <div {{action "toggleColapse"}}>
-      <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
+  <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
         {{t 'Organizer or Group Information'}}
           <i class="{{if this.collapsed 'caret up icon' 'caret down icon'}}" style="background-color: #ffffff;"></i>
       </h3>
@@ -573,13 +567,6 @@
     >{{t "Add Organizer or Group Information"}}</button> --}}
 
     <div class="collapsible-content {{this.collapseContent}}" style="padding-left: 0px; padding-right: 0px">
-  <button
-      type="button"
-      class="collapsible"
-      {{action "toggleColapse"}}
-    >{{t "Add Organizer or Group Information"}}
-    <i class="down chevron icon chevron-right "></i>
-  </button>
     <div class="collapsible-content {{this.collapseContent}}">
       <div class="field">
         <label for="owner_name">{{t "Organizer or Group Name"}}</label>
@@ -592,7 +579,9 @@
         <Widgets::Forms::RichTextEditor @id="owner_description" @value={{this.data.event.ownerDescription}} />
       </div>
     </div>
+    </div>
   </div>
+
   <div class="spacer-50"></div>
   {{!-- <div class="field">
   <i class="dropdown icon"></i>

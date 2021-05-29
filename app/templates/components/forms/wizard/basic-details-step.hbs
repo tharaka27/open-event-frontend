@@ -9,7 +9,7 @@
       {{t 'Information About Basic Details'}}
     </h3>
     <div class="ui muted aligned text" style="text-align: justify;">
-      {{t 'The basic details form collects the basic details of the event such as event name, event type, date to be held, location, ticketing system, etc. You need to first fill at least the required details in this section to proceed to other sections or publish the event.'}}
+      {{t 'The basic details form collects the basic details of your event such as event name, event type, date to be held, location, ticketing system, etc. You need to first fill at least the required details in this section to proceed to other sections or publish your event.'}}
     </div>
   </div>
 
@@ -770,12 +770,13 @@
   </div>
 
   <div class="my-card">
-  <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
+    <div {{action "toggleColapse"}}>
+      <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
         {{t 'Organizer or Group Information'}}
-        <button type="button" style="background-color: #ffffff; border: none" {{action "toggleColapse"}}>
-          <i class="dropdown icon collapsible" style="background-color: #ffffff;"></i>
-        </button>
-    </h3>
+          <i class="{{if this.collapsed 'caret up icon' 'caret down icon'}}" style="background-color: #ffffff;"></i>
+      </h3>
+    </div>
+    
   {{!-- <button
       type="button"
       class="collapsible"

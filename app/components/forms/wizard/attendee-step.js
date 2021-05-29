@@ -7,6 +7,7 @@ import { sortBy } from 'lodash-es';
 export default Component.extend(FormMixin, EventWizardMixin, {
 
   collapseContent: 'collapsible-none',
+  collapsed: false,
 
   fixedFields: computed('data.customForms.@each', function() {
     return this.data.customForms?.filter(field => field.isFixed);
@@ -37,8 +38,10 @@ export default Component.extend(FormMixin, EventWizardMixin, {
       this.data.event.isTicketFormEnabled = true;
       if (this.collapseContent === 'collapsible-none') {
         this.set('collapseContent', 'collapsible-block');
+        this.set('collapsed', true);
       } else {
         this.set('collapseContent', 'collapsible-none');
+        this.set('collapsed', false);
       }
     }
   }

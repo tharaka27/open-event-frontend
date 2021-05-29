@@ -1,8 +1,8 @@
 <form class="ui form {{if this.isLoading 'loading'}}" autocomplete="off" {{action 'move' 'forwards' on='submit' preventDefault=true}} style="cursor: default">
   <div class="my-card">
-    <h3 class="ui dividing header weight-300">
+    <div class="ui dividing header weight-300">
       {{t 'Information About Attendee Form'}}
-    </h3>
+    </div>
     <div class="ui muted aligned text" style="text-align: justify;">
       {{t 'The attendee form by default collects the name and email of an attendee. You also have the option to collect additional information such as contact data, position, organization and more. This information will be available together with the ticket information in a CSV file in the ticket section of your event.'}}
     </div>
@@ -21,12 +21,12 @@
   </div>
   
   <div class="my-card">
-    <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
+    <div {{action "toggleColapse"}}>
+      <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
         {{t 'Optional Form Fields'}}
-        <button type="button" style="background-color: #ffffff; border: none" {{action "toggleColapse"}}>
-          <i class="dropdown icon collapsible" style="background-color: #ffffff;"></i>
-        </button>
-    </h3>
+          <i class="{{if this.collapsed 'caret up icon' 'caret down icon'}}" style="background-color: #ffffff;"></i>
+      </h3>
+    </div>
     <div class="collapsible-content {{this.collapseContent}}" style="padding-left: 0px; padding-right: 0px; overflow: visible">
       <div class="ui two column stackable grid" style="padding-bottom: 0px;">
         <div class="w-full column">

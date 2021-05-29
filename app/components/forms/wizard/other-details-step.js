@@ -14,6 +14,7 @@ export default Component.extend(FormMixin, EventWizardMixin, {
   timezones,
 
   collapseContent: 'collapsible-none',
+  collapsed: false,
 
   deletedTickets: [],
 
@@ -95,9 +96,11 @@ export default Component.extend(FormMixin, EventWizardMixin, {
       if (this.collapseContent === 'collapsible-none') {
         this.set('collapseContent', 'collapsible-block');
         this.set('hasCodeOfConduct', true);
+        this.set('collapsed', true);
       } else {
         this.set('collapseContent', 'collapsible-none');
         this.set('hasCodeOfConduct', false);
+        this.set('collapsed', false);
       }
     }
   }

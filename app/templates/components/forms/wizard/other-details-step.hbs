@@ -9,7 +9,7 @@
         {{t 'Information About Additional Info'}}
       </h3>
       <div class="ui muted aligned text" style="text-align: justify;">
-        {{t 'This section collects additional information about the event'}}
+        {{t 'This section collects additional information about your event.'}}
       </div>
   </div>
 
@@ -160,12 +160,12 @@
         <label for="add_code_of_conduct">{{t "Add Code of Conduct"}}</label>
       </div>
     </div> --}}
-    <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
+    <div {{action "toggleColapse"}}>
+      <h3 class="ui dividing header weight-300" style="background-color: #ffffff; display: flex; justify-content: space-between;">
         {{t 'Code of Conduct'}}
-        <button type="button" style="background-color: #ffffff; border: none" {{action "toggleColapse"}}>
-          <i class="dropdown icon collapsible" style="background-color: #ffffff;"></i>
-        </button>
-    </h3>
+          <i class="{{if this.collapsed 'caret up icon' 'caret down icon'}}" style="background-color: #ffffff;"></i>
+      </h3>
+    </div>
     {{!-- <button type="button" class="collapsible" {{action "toggleColapse"}}>{{t
         "Add Code of Conduct"
       }}</button> --}}

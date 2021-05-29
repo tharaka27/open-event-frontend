@@ -28,6 +28,7 @@ export default Component.extend(FormMixin, EventWizardMixin, {
   selectedLocationType: 'Venue',
 
   collapseContent: 'collapsible-none',
+  collapsed: false,
 
   deletedTickets: [],
 
@@ -576,8 +577,10 @@ export default Component.extend(FormMixin, EventWizardMixin, {
     toggleColapse() {
       if (this.collapseContent === 'collapsible-none') {
         this.set('collapseContent', 'collapsible-block');
+        this.set('collapsed', true);
       } else {
         this.set('collapseContent', 'collapsible-none');
+        this.set('collapsed', false);
       }
     }
   }

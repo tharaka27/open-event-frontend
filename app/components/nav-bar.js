@@ -1,6 +1,7 @@
 import classic from 'ember-classic-decorator';
 import { action, computed } from '@ember/object';
 import Component from '@ember/component';
+import waitFor from '@ember/test-helpers/dom/wait-for';
 
 @classic
 export default class NavBar extends Component {
@@ -46,6 +47,7 @@ export default class NavBar extends Component {
     const mobileSearchBar = document.getElementById('mobileSearchBar');
     mobileBar.classList.add('show-bar');
     mobileSearchBar.focus();
+    startDictationSmall();
     document.querySelector('.pusher').addEventListener('click', function(e) {
       if (e.target === mobileSearchBar) {
         return;
@@ -60,3 +62,31 @@ export default class NavBar extends Component {
     this.routing.transitionTo('index');
   }
 }
+
+function startDictationSmall() {
+
+  if (window.hasOwnProperty('webkitSpeechRecognition')) {
+
+    //alert("Hello world");
+
+    var recognition = new webkitSpeechRecognition();
+
+    recognition.continuous = false;
+    recognition.interimResults = false;
+
+    recognition.lang = "en-US";
+    recognition.start();
+
+    recognition.onresult = function (e) {
+      document.getElementById("mobileSearchBar").value
+        = e.results[0][0].transcript;
+      recognition.stop();
+    };
+
+    recognition.onerror = function (e) {
+      recognition.stop();
+    }
+
+  }
+}
+

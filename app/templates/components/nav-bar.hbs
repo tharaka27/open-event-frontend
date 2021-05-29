@@ -75,11 +75,29 @@
     <div class="right menu nav-bar">
       {{#if (and this.isNotEventPageRoute this.isNotExplorePageRoute this.isNotWizardPageRoute)}}
       <div class="search-bar d-flex items-center space-between m-2 p-2" style="min-width:300px;">
-        <Input @class="prompt" @type="text" @key-up={{"handleKeyPress"}} @value={{this.event_name}}
+        <Input @class="prompt" id="transcript" @type="text" @key-up={{"handleKeyPress"}} @value={{this.event_name}}
           placeholder={{t "Search Events" }} />
         <i class="search icon"></i>
       </div>
       {{/if}}
+
+      {{#if (and this.isNotEventPageRoute this.isNotExplorePageRoute this.isNotWizardPageRoute)}}
+      <div>
+        <i class="fa fa-microphone" style="" onclick="startDictation()"
+          style="cursor: pointer;margin-top:22px;margin-left:10px">
+        </i>
+      </div>
+      {{/if}}
+
+      {{!-- Search Form
+      <form id="labnol" method="get" action="https://www.google.com/search">
+        <div class="speech">
+          <input type="text" name="q" id="transcript" placeholder="Speak" />
+          <i class="fa fa-microphone" onclick="startDictation()" style="cursor: pointer;"></i>
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+      --}}
 
 
       {{!-- Container to center search box --}}
@@ -99,13 +117,13 @@
 
       {{!-- Create event if not authenticated --}}
       {{#if (and this.isNotWizardPageRoute this.isNotEventPageRoute this.session.isAuthenticated)}}
-      
+
       <LinkTo @route="create" class="item ui blue text">
         <div class="tooltip"><i class="fa fa-edit" style="color: black;"></i>
           <span class="tooltiptext">{{t 'New Event'}}</span>
         </div>
       </LinkTo>
-      
+
       {{/if}}
 
       {{!-- Account details dropdown only if authenticated --}}
@@ -127,35 +145,41 @@
           <div class="divider"></div>
           {{!--<a href="{{href-to 'my-tickets'}}" class="item">{{t 'My Tickets'}}</a>--}}
           <a href="{{href-to 'my-tickets'}}" role="button" class="item ">
-            <div class="d-flex">{{t 'My Tickets'}}<i class="fa fa-ticket" style="margin-left: auto !important; padding-right:5%"></i>
+            <div class="d-flex">{{t 'My Tickets'}}<i class="fa fa-ticket"
+                style="margin-left: auto !important; padding-right:5%"></i>
             </div>
           </a>
-          
+
           {{!--<a href="{{href-to 'my-sessions'}}" class="item">{{t 'My Sessions'}}</a>--}}
           <a href="{{href-to 'my-sessions'}}" role="button" class="item ">
-            <div class="d-flex">{{t 'My Sessions'}}<i class="fa fa-file" style="margin-left: auto !important; padding-right:5%"></i>
+            <div class="d-flex">{{t 'My Sessions'}}<i class="fa fa-file"
+                style="margin-left: auto !important; padding-right:5%"></i>
             </div>
           </a>
           {{!--<a href="{{href-to 'groups.list'}}" class="item">{{t 'My Groups'}}</a>--}}
           <a href="{{href-to 'groups.list'}}" role="button" class="item ">
-            <div class="d-flex">{{t 'My Groups'}}<i class="fa fa-users" style="margin-left: auto !important; padding-right:5%"></i>
+            <div class="d-flex">{{t 'My Groups'}}<i class="fa fa-users"
+                style="margin-left: auto !important; padding-right:5%"></i>
             </div>
           </a>
           {{!--<a href="{{href-to 'events.list' 'live'}}" class="item">{{t 'My Events'}}</a>--}}
           <a href="{{href-to 'events.list' 'live'}}" role="button" class="item ">
-            <div class="d-flex">{{t 'My Events'}}<i class="fa fa-calendar" style="margin-left: auto !important; padding-right:5%"></i>
+            <div class="d-flex">{{t 'My Events'}}<i class="fa fa-calendar"
+                style="margin-left: auto !important; padding-right:5%"></i>
             </div>
           </a>
           <div class="divider"></div>
           {{!--<a href="{{href-to 'account.profile'}}" class="item">{{t 'Account'}}</a>--}}
           <a href="{{href-to 'account.profile'}}" role="button" class="item ">
-            <div class="d-flex">{{t 'Account'}}<i class="fa fa-user-circle" style="margin-left: auto !important; padding-right:5%"></i>
+            <div class="d-flex">{{t 'Account'}}<i class="fa fa-user-circle"
+                style="margin-left: auto !important; padding-right:5%"></i>
             </div>
           </a>
           {{#if this.authManager.currentUser.isAnAdmin}}
           {{!--<a href="{{href-to 'admin'}}" class="item">{{t 'Admin'}}</a>--}}
           <a href="{{href-to 'admin'}}" role="button" class="item ">
-            <div class="d-flex">{{t 'Admin Panel'}}<i class="fa fa-edit" style="margin-left: auto !important; padding-right:5%"></i>
+            <div class="d-flex">{{t 'Admin Panel'}}<i class="fa fa-edit"
+                style="margin-left: auto !important; padding-right:5%"></i>
             </div>
           </a>
           {{/if}}
@@ -188,16 +212,22 @@
     <div id="mobile-bar" class="search-bar search-bar-mobile d-flex items-center space-between m-1 p-2">
       <Input @class="prompt" id="mobileSearchBar" @type="text" @key-up={{"handleKeyPress"}} @value={{this.event_name}}
         placeholder={{t "Search Events" }} />
+      {{!--
+      <i class="fa fa-microphone" onclick="startDictationSmall()"
+          style="cursor: pointer;margin-top:10px;margin-right:10px">
+      </i>
+      --}}
       <i role="button" class="search icon" style="cursor: auto;" {{on "click" this.searchOnClick}}></i>
+      
     </div>
     <div class="right menu nav-bar">
-      
+
       {{#if (and this.isNotEventPageRoute this.isNotExplorePageRoute this.isNotWizardPageRoute)}}
       <div role="button" class="item ui" {{action "toggleMobileSearchBar" }}>
         <i class="search icon"></i>
       </div>
       {{/if}}
-      
+
       {{#if this.session.isAuthenticated}}
       <NotificationDropdown @notifications={{this.notifications}} />
       {{/if}}
@@ -216,3 +246,32 @@
     </div>
   </div>
 </div>
+
+
+<script>
+  function startDictation() {
+
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+
+      var recognition = new webkitSpeechRecognition();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.lang = "en-US";
+      recognition.start();
+
+      recognition.onresult = function (e) {
+        document.getElementById('transcript').value
+          = e.results[0][0].transcript;
+        recognition.stop();
+      };
+
+      recognition.onerror = function (e) {
+        recognition.stop();
+      }
+
+    }
+  }
+  
+</script>

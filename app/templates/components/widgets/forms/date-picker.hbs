@@ -2,6 +2,6 @@
 {{#if this.icon}}
   <i class="calendar icon"></i>
 {{/if}}
-<Input @type="text" @value={{value}} placeholder={{this.placeholder}} @name={{name}}
+<Input @type="text" @value={{value}} placeholder={{this.placeholder}} @name={{name}} onkeydown="return false"
        @focus-out={{action "onChange"}}
    />

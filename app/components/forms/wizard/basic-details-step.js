@@ -157,6 +157,38 @@ export default Component.extend(FormMixin, EventWizardMixin, {
     $.fn.form.settings.rules.checkDateDifference = () => {
       return moment($('[name=end_date]')[0].value, 'MM-DD-YYYY').diff(moment($('[name=start_date]')[0].value, 'MM-DD-YYYY'), 'days') <= 20;
     };
+    $.fn.form.settings.rules.checkTicketSellingDateDifference = () => {
+      return moment($('[name=end_date]')[0].value, 'MM-DD-YYYY').diff(moment($('[name=ticket_start_date]')[0].value, 'MM-DD-YYYY'), 'days') >= 0;
+    }
+    $.fn.form.settings.rules.checkTicketSellingEndDateDifference = () => {
+      return moment($('[name=end_date]')[0].value, 'MM-DD-YYYY').diff(moment($('[name=ticket_end_date]')[0].value, 'MM-DD-YYYY'), 'days') >= 0;
+    }
+    $.fn.form.settings.rules.checkTicketDateDifference = () => {
+      return moment($('[name=ticket_end_date]')[0].value, 'MM-DD-YYYY').diff(moment($('[name=ticket_start_date]')[0].value, 'MM-DD-YYYY'), 'days') >= 0;
+    }
+    $.fn.form.settings.rules.ticketSellingStart = () => {
+      let today = moment(new Date());
+      return moment(today, 'MM-DD-YYYY').diff(moment($('[name=ticket_start_date]')[0].value, 'MM-DD-YYYY'), 'days') <= 0;
+    }
+    $.fn.form.settings.rules.startDateCannotBePast = () => {
+      let today = moment(new Date());
+      return moment(today, 'MM-DD-YYYY').diff(moment($('[name=start_date]')[0].value, 'MM-DD-YYYY'), 'days') <= 0;
+    }
+    $.fn.form.settings.rules.checkValidTimeDifferenceSellingStartEnd = () => {
+      return !($('[name=ticket_start_date]')[0].value === $('[name=ticket_end_date]')[0].value &&
+        moment($('[name=ticket_start_time]')[0].value, 'HH:mm')
+          .isSameOrAfter(moment($('[name=ticket_end_time]')[0].value, 'HH:mm')));
+    };
+    $.fn.form.settings.rules.checkValidTimeDifferenceSellingStart = () => {
+      return !($('[name=ticket_start_date]')[0].value === $('[name=end_date]')[0].value &&
+        moment($('[name=end_time]')[0].value, 'HH:mm')
+        .isSameOrAfter(moment($('[name=ticket_start_time]')[0].value, 'HH:mm')));
+    };
+    $.fn.form.settings.rules.checkValidTimeDifferenceSellingEnd = () => {
+      return !($('[name=ticket_end_date]')[0].value === $('[name=end_date]')[0].value &&
+        moment($('[name=end_time]')[0].value, 'HH:mm')
+          .isSameOrAfter(moment($('[name=ticket_end_time]')[0].value, 'HH:mm')));
+    };
 
     const validationRules = {
       inline : true,
@@ -191,6 +223,10 @@ export default Component.extend(FormMixin, EventWizardMixin, {
             {
               type   : 'date',
               prompt : this.l10n.t('Please give a valid start date')
+            },
+            {
+              type: 'startDateCannotBePast',
+              prompt: this.l10n.t('Start date cannot be a past date')
             }
           ]
         },
@@ -248,6 +284,57 @@ export default Component.extend(FormMixin, EventWizardMixin, {
             }
           ]
         },
+        ticketStartDate: {
+          identifier: 'ticket_start_date',
+          rules : [
+            {
+              type : 'checkTicketSellingDateDifference',
+              prompt: this.l10n.t('Ticket Selling start date should be less than Event end date')
+            },
+            {
+              type: 'ticketSellingStart',
+              prompt: this.l10n.t('Ticket Selling Start Date Cannot be a past date')
+            }
+          ]
+        },
+        ticketEndDate : {
+          identifier: 'ticket_end_date',
+          rules : [
+            {
+              type: 'checkTicketSellingEndDateDifference',
+              prompt: this.l10n.t('Ticket Selling end date should be less than Event end date')
+            },
+            {
+              type: 'checkTicketDateDifference',
+              prompt: this.l10n.t('Ticket Selling end date should be grater than Selling start date')
+            }
+          ]
+        },
+        ticketStartTime: {
+          identifier: 'ticket_start_time',
+          depends: 'ticket_start_date',
+          rules : [
+            {
+              type: 'checkValidTimeDifferenceSellingStart',
+              prompt: this.l10n.t('Ticket Selling starting time should be less than Event ending time')
+            },
+          ]
+        },
+        ticketEndTime: {
+          identifier: 'ticket_end_time',
+          depends: 'ticket_end_date',
+          rules : [
+            {
+              type: 'checkValidTimeDifferenceSellingStartEnd',
+              prompt: this.l10n.t('Ticket Selling ending time should be grater than Selling starting time')
+            },
+            {
+              type: 'checkValidTimeDifferenceSellingEnd',
+              prompt: this.l10n.t('Ticket Selling ending time should be less than Event ending time')
+            },
+          ]
+        },
+
         ticketDescription: {
           identifier : 'ticket_description',
           optional   : true,

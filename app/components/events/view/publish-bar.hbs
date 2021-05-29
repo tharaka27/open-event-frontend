@@ -2,7 +2,7 @@
   <a 
     href="{{@event.url}}" 
     target="_blank" rel="noopener" 
-    class="ui button labeled icon small {{if (eq @event.state 'published') 'green'}}" >
+    class="ui button left labeled icon small {{if (eq @event.state 'published') ''}}" >
     <i class="unhide icon"></i>
     {{#if (eq @event.state 'published')}}
       {{t 'View'}}
@@ -13,9 +13,9 @@
 {{/unless}}
 
 {{#if (or this.isEventPublishable @showOnInvalid)}}
-  <button class="ui button labeled icon small {{if (eq @event.state 'published') 'orange' 'green'}}" {{action 'openModal'}}>
+  <button class="ui button labeled icon small {{if (eq @event.state 'published') '' 'teal'}}" {{action 'openModal'}}>
     {{#if (eq @event.state 'published')}}
-      <i class="ban icon"></i>
+      <i class="ban red icon"></i>
       {{t 'Unpublish'}}
     {{else}}
       <i class="check icon"></i>

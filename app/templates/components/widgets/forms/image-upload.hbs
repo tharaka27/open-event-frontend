@@ -13,16 +13,16 @@
         <img src={{this.selectedImage}} alt="Selected image">
       </div>
       {{#if this.allowReCrop}}
-        <div class="ui bottom attached mini buttons">
-          <button type="button" class="ui teal button" {{action 'reCrop'}}>
+        <div class="ui right aligned mt-2 mb-2 mr-1">
+          <button type="button" class="ui left labeled icon button" {{action 'reCrop'}}>
             <i class="crop icon"></i>
             {{t 'Re-crop'}}
           </button>
         </div>
       {{/if}}
-      <div class="ui bottom attached mini buttons">
-        <button type="button" class="ui red button" {{action 'removeSelection'}}>
-          <i class="trash icon"></i>
+      <div class="ui right aligned mt-2 mb-2 mr-1">
+        <button type="button" class="ui left labeled icon button" {{action 'removeSelection'}}>
+          <i class="trash red icon"></i>
           {{if this.needsConfirmation 'Delete' 'Confirm Delete'}}
         </button>
       </div>
@@ -38,16 +38,16 @@
         <img src={{this.selectedImage}} alt="Selected image">
       </div>
       {{#if this.allowReCrop}}
-        <div class="ui bottom attached mini buttons">
-          <button type="button" class="ui teal button" {{action 'reCrop'}}>
+        <div class="ui right aligned mt-2 mb-2 mr-1">
+          <button type="button" class="ui left labeled icon button" {{action 'reCrop'}}>
             <i class="crop icon"></i>
             {{t 'Re-crop'}}
           </button>
         </div>
       {{/if}}
-      <div class="ui bottom attached mini buttons">
-        <button type="button" class="ui red button" {{action 'removeSelection'}}>
-          <i class="trash icon"></i>
+      <div class="ui right aligned mt-2 mb-2 mr-1">
+        <button type="button" class="ui left labeled icon button" {{action 'removeSelection'}}>
+          <i class="trash red icon"></i>
           {{if this.needsConfirmation 'Delete' 'Confirm Delete'}}
         </button>
       </div>

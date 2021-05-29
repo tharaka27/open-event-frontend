@@ -6,7 +6,7 @@
   <table class="ui very basic compact unstackable table">
     <tbody>
       <tr>
-        <td><strong>{{t 'Session Types'}}</strong> </td>
+        <td>{{t 'Session Types'}} </td>
         <td>
           {{#if this.data.sessionTypes}}
             {{#each this.data.sessionTypes as |sessionType index|~}}
@@ -18,7 +18,7 @@
         </td>
       </tr>
       <tr>
-        <td><strong>{{t 'Tracks'}}</strong></td>
+        <td>{{t 'Tracks'}}</td>
         <td>
           {{#if this.data.tracks}}
             {{#each this.data.tracks as |tracks index|~}}
@@ -30,7 +30,7 @@
         </td>
       </tr>
       <tr>
-        <td><strong>{{t 'Microlocations'}}</strong></td>
+        <td>{{t 'Microlocations'}}</td>
         <td>
           {{#if this.data.microlocations}}
             {{#each this.data.microlocations as |microlocations index|~}}
@@ -42,7 +42,7 @@
         </td>
       </tr>
       <tr>
-        <td><strong>{{t 'Call for Speakers'}}</strong> </td>
+        <td>{{t 'Call for Speakers'}} </td>
         <td>
           {{#if this.data.speakersCall}}
             {{t 'Start Time'}}: {{general-date this.data.speakersCall.startsAt 'date-time-tz-long' tz=this.data.event.timezone}}
@@ -54,7 +54,7 @@
         </td>
       </tr>
       <tr>
-        <td><strong>{{t 'No. of Speakers'}}</strong></td>
+        <td>{{t 'No. of Speakers'}}</td>
         <td>
           {{#if this.data.event.isSessionsSpeakersEnabled}}
             {{this.data.statistics.speakers.total}}
@@ -64,7 +64,7 @@
         </td>
       </tr>
       <tr>
-        <td><strong>{{t 'No. of Sessions'}}</strong></td>
+        <td>{{t 'No. of Sessions'}}</td>
         <td>
           {{#if this.data.event.isSessionsSpeakersEnabled}}
             {{this.data.statistics.sessions}}
@@ -85,7 +85,7 @@
     </thead>
     <tbody>
       <tr>
-        <td><strong>{{t 'Speakers'}}</strong></td>
+        <td>{{t 'Speakers'}}</td>
         <td>
           {{#if this.data.event.isSessionsSpeakersEnabled}}
             {{t 'Accepted'}}: {{this.data.statistics.speakers.accepted}}
@@ -99,7 +99,7 @@
         </td>
       </tr>
       <tr>
-        <td><strong>{{t 'Sessions'}}</strong></td>
+        <td>{{t 'Sessions'}}</td>
         <td>
           {{#if this.data.event.isSessionsSpeakersEnabled}}
             {{t 'Submitted'}}: {{this.data.statistics.sessions}}

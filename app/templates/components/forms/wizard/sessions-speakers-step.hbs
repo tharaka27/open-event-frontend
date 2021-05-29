@@ -63,11 +63,11 @@
             <div class="{{unless this.device.isMobile 'four wide'}} field">
               <Widgets::Forms::ColorPicker @value={{track.color}} @fontColor={{track.fontColor}}>
                 {{#if (gt this.tracks.length 1)}}
-                  <button class="ui icon red button" type="button" {{action 'removeItem' track}}>
-                    <i class="minus icon"></i>
+                  <button class="ui icon button" type="button" {{action 'removeItem' track}}>
+                    <i class="minus red icon"></i>
                   </button>
                 {{/if}}
-                <button class="ui icon primary button" type="button" {{action 'addItem' 'track'}}>
+                <button class="ui icon teal button" type="button" {{action 'addItem' 'track'}}>
                   <i class="plus icon"></i>
                 </button>
               </Widgets::Forms::ColorPicker>
@@ -94,11 +94,11 @@
               <div class="ui action input fluid">
                 <Input @type="number" @value={{microlocation.floor}} placeholder={{t "Floor"}} />
                 {{#if (gt this.microlocations.length 1)}}
-                  <button class="ui icon red button" type="button" {{action 'removeRoom' microlocation index}}>
-                    <i class="minus icon"></i>
+                  <button class="ui icon button" type="button" {{action 'removeRoom' microlocation index}}>
+                    <i class="minus red icon"></i>
                   </button>
                 {{/if}}
-                <button class="ui icon primary button" type="button" {{action 'addRoom' index}}>
+                <button class="ui icon teal button" type="button" {{action 'addRoom' index}}>
                   <i class="plus icon"></i>
                 </button>
               </div>
@@ -135,11 +135,11 @@
               <div class="ui action input fluid">
                 <Widgets::Forms::TimePicker @value={{sessionType.length}} @placeholder="HH:MM" @icon={{false}} />
                 {{#if (gt this.sessionTypes.length 1)}}
-                  <button class="ui icon red button" type="button" {{action 'removeItem' sessionType}}>
-                    <i class="minus icon"></i>
+                  <button class="ui icon button" type="button" {{action 'removeItem' sessionType}}>
+                    <i class="minus red icon"></i>
                   </button>
                 {{/if}}
-                <button class="ui icon primary button" type="button" {{action 'addItem' 'sessionType'}}>
+                <button class="ui icon teal button" type="button" {{action 'addItem' 'sessionType'}}>
                   <i class="plus icon"></i>
                 </button>
               </div>
@@ -383,9 +383,8 @@
             <div class="ui action input fluid">
               <input type="text" name="private_link" value="{{concat this.data.event.url '/cfs/' this.data.speakersCall.hash}}" placeholder="{{concat this.data.event '/cfs/' this.data.speakersCall.hash}}" readonly>
               <UiPopup @on="click" @content={{t "Link copied to clipboard"}} @position="bottom right">
-                <CopyButton @clipboardText={{concat this.data.event.url "/cfs/" this.data.speakersCall.hash}} @class="ui black right labeled icon copy button h-full">
+                <CopyButton @clipboardText={{concat this.data.event.url "/cfs/" this.data.speakersCall.hash}} @class="ui icon copy button h-full" data-tooltip="Copy Link">
                   <i class="copy icon"></i>
-                  {{t 'Copy'}}
                 </CopyButton>
               </UiPopup>
             </div>

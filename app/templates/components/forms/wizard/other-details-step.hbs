@@ -25,7 +25,7 @@
         {{t "Social Media"}}
         <UiPopup
           @content={{t "Add social link"}}
-          @class="ui compact icon blue circular button ml-2"
+          @class="ui compact icon teal circular button ml-2"
           style="margin-left: 1rem !important;"
           @click={{action "addItem" "socialLinks" "social-link"}}
           @position="top center"
@@ -44,11 +44,11 @@
           <div class="ui icon buttons">
             <UiPopup
               @content={{t "Remove"}}
-              @class="ui icon red button"
+              @class="ui icon button"
               @click={{action "removeItem" socialLink "socialLinks"}}
               @position="top center"
             >
-              <i class="minus icon"></i>
+              <i class="minus red icon"></i>
             </UiPopup>
           </div>
         </Widgets::Forms::SocialLinkField>
@@ -58,7 +58,7 @@
         {{t "Extra Links"}}
         <UiPopup
           @content={{t "Add custom link"}}
-          @class="ui compact icon blue circular button"
+          @class="ui compact icon teal circular button"
           style="margin-left: 1rem !important;"
           @click={{action "addItem" "customLink" "social-link"}}
           @position="top center"
@@ -78,11 +78,11 @@
           <div class="ui icon buttons">
             <UiPopup
               @content={{t "Remove"}}
-              @class="ui icon red button"
+              @class="ui icon button"
               @click={{action "removeItem" socialLink "socialLinks"}}
               @position="top center"
             >
-              <i class="minus icon"></i>
+              <i class="minus red icon"></i>
             </UiPopup>
           </div>
         </Widgets::Forms::SocialLinkField>

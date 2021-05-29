@@ -59,9 +59,9 @@
           {{/if}} --}}
         <!--</h3>-->
         {{#if this.sponsors.length}}
-            <button type="button" class="ui mini red button right floated" {{action 'removeSponsor' sponsor}}>
-              <i class="trash icon"></i>
-              {{t 'Remove'}}
+            <button type="button" class="ui mini left labeled icon button right floated" {{action 'removeSponsor' sponsor}}>
+              <i class="trash red icon"></i>
+              {{t 'Remove Sponsor'}}
             </button>
           {{/if}}
         <br>
@@ -127,7 +127,8 @@
 
   <button 
   type="button" 
-  class="ui primary {{if this.device.isMobile 'small'}} button" {{action 'addSponsor'}}>
+  class="ui left labeled icon {{if this.device.isMobile 'small'}} teal button" {{action 'addSponsor'}}>
+  <i class="add icon"></i>
   {{if this.sponsors.length (t 'Add another sponsor') (t 'Add sponsor')}}</button>
   <div class="spacer-50"></div>
 

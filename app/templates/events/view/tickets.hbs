@@ -1,4 +1,4 @@
-<div class="ui grid">
+<div class="ui grid stackable">
   <div class="row">
     <div class="{{if this.device.isMobile 'sixteen' 'three'}} wide column">
       <TabbedNavigation @isVertical={{true}}>
@@ -22,8 +22,10 @@
         </LinkTo>
       </TabbedNavigation>
     </div>
-    <div class="{{if this.device.isMobile 'sixteen' 'thirteen'}} wide column">
-      {{outlet}}
+    <div class="ui fluid segment {{if this.device.isMobile 'sixteen' 'thirteen'}} wide column">
+      <div class="content">
+        {{outlet}}
+      </div>
     </div>
   </div>
 </div>

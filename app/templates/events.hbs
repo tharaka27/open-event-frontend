@@ -1,5 +1,6 @@
 {{#if (and (not-includes this.session.currentRouteName 'events.view') (not-includes this.session.currentRouteName 'events.my-sessions'))}}
   <UnverifiedUserMessage />
+  <h1 class="ui header weight-400">{{t 'My Events'}}</h1>
   <div class="row">
     <div class="sixteen wide column">
       <TabbedNavigation>

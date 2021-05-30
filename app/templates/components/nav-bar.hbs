@@ -144,51 +144,70 @@
             this.authManager.currentUser.email) }}</a>
           <div class="divider"></div>
           {{!--<a href="{{href-to 'my-tickets'}}" class="item">{{t 'My Tickets'}}</a>--}}
-          <a href="{{href-to 'my-tickets'}}" role="button" class="item ">
+          {{!-- <a href="{{href-to 'my-tickets'}}" role="button" class="item ">
             <div class="d-flex">{{t 'My Tickets'}}<i class="fa fa-ticket"
                 style="margin-left: auto !important; padding-right:5%"></i>
             </div>
-          </a>
+          </a> --}}
+          <a href="{{href-to 'my-tickets'}}" role="button" class="item ">
+            <i class="fa fa-ticket" style="margin-right:17px;"></i>{{t 'My Tickets'}}</a>
 
           {{!--<a href="{{href-to 'my-sessions'}}" class="item">{{t 'My Sessions'}}</a>--}}
-          <a href="{{href-to 'my-sessions'}}" role="button" class="item ">
+          {{!-- <a href="{{href-to 'my-sessions'}}" role="button" class="item ">
             <div class="d-flex">{{t 'My Sessions'}}<i class="fa fa-file"
                 style="margin-left: auto !important; padding-right:5%"></i>
             </div>
-          </a>
+          </a> --}}
+          <a href="{{href-to 'my-sessions'}}" role="button" class="item ">
+            <i class="fa fa-file" style="margin-right:20px;"></i>{{t 'My Sessions'}}</a>
+
           {{!--<a href="{{href-to 'groups.list'}}" class="item">{{t 'My Groups'}}</a>--}}
-          <a href="{{href-to 'groups.list'}}" role="button" class="item ">
+          {{!-- <a href="{{href-to 'groups.list'}}" role="button" class="item ">
             <div class="d-flex">{{t 'My Groups'}}<i class="fa fa-users"
                 style="margin-left: auto !important; padding-right:5%"></i>
             </div>
-          </a>
+          </a> --}}
+          <a href="{{href-to 'groups.list'}}" role="button" class="item ">
+            <i class="fa fa-users" style="margin-right:17px;"></i>{{t 'My Groups'}}</a>
+
+
           {{!--<a href="{{href-to 'events.list' 'live'}}" class="item">{{t 'My Events'}}</a>--}}
-          <a href="{{href-to 'events.list' 'live'}}" role="button" class="item ">
+          {{!--<a href="{{href-to 'events.list' 'live'}}" role="button" class="item ">
             <div class="d-flex">{{t 'My Events'}}<i class="fa fa-calendar"
                 style="margin-left: auto !important; padding-right:5%"></i>
             </div>
-          </a>
+          </a> --}}
+          <a href="{{href-to 'events.list' 'live'}}" role="button" class="item ">
+            <i class="fa fa-calendar" style="margin-right:20px;"></i>{{t 'My Events'}}</a>
           <div class="divider"></div>
           {{!--<a href="{{href-to 'account.profile'}}" class="item">{{t 'Account'}}</a>--}}
-          <a href="{{href-to 'account.profile'}}" role="button" class="item ">
+          {{!--<a href="{{href-to 'account.profile'}}" role="button" class="item ">
             <div class="d-flex">{{t 'Account'}}<i class="fa fa-user-circle"
                 style="margin-left: auto !important; padding-right:5%"></i>
             </div>
-          </a>
-          {{#if this.authManager.currentUser.isAnAdmin}}
+          </a> --}}
+          <a href="{{href-to 'account.profile'}}" role="button" class="item ">
+            <i class="fa fa-user-circle" style="margin-right:20px;"></i>{{t 'Account'}}</a>
+
+          {{#if this.authManager.currentUser.isAnAdmin }}
           {{!--<a href="{{href-to 'admin'}}" class="item">{{t 'Admin'}}</a>--}}
+
+          {{!-- <a href="{{href-to 'admin'}}" role="button" class="item ">
+            <i class="fa fa-edit" style="margin-left: auto !important; padding-right:5%"></i>
+            {{t 'Admin Panel'}}</a>
+          --}}
           <a href="{{href-to 'admin'}}" role="button" class="item ">
-            <div class="d-flex">{{t 'Admin Panel'}}<i class="fa fa-edit"
-                style="margin-left: auto !important; padding-right:5%"></i>
-            </div>
-          </a>
+            <i class="fa fa-edit" style="margin-right:20px;"></i>{{t 'Admin Panel'}}</a>
           {{/if}}
 
           <div class="divider"></div>
+
           <a href="#" role="button" class="item logout-button" {{action 'logout' }}>
-            <div class="d-flex">{{t 'Logout'}}<i class="ui sign out icon" style="margin-left: auto !important"></i>
-            </div>
+            <i class="ui sign out icon" style="margin-right:2px;"></i>
+            {{!-- <div class="d-flex">{{t 'Logout'}} --}}
+              {{t 'Logout'}}
           </a>
+
         </div>
       </UiDropdown>
       {{else}}
@@ -214,11 +233,11 @@
         placeholder={{t "Search Events" }} />
       {{!--
       <i class="fa fa-microphone" onclick="startDictationSmall()"
-          style="cursor: pointer;margin-top:10px;margin-right:10px">
+        style="cursor: pointer;margin-top:10px;margin-right:10px">
       </i>
       --}}
       <i role="button" class="search icon" style="cursor: auto;" {{on "click" this.searchOnClick}}></i>
-      
+
     </div>
     <div class="right menu nav-bar">
 
@@ -273,5 +292,5 @@
 
     }
   }
-  
+
 </script>
